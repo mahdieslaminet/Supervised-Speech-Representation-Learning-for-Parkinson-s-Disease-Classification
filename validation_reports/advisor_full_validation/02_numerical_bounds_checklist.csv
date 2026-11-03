@@ -1,0 +1,7 @@
+Station,Valid_Math_Range,Live_Observed_Value,In_Valid_Bounds,Status
+ST-01: Mel Input Tensor,"[0.0000, 1.0000] & Std > 0.05","Min=0.0000, Max=1.0000, Std=0.289",True,PASS ✅
+ST-02: Decoder & Bottleneck,"Sigmoid in (0, 1) & Bottleneck Std > 0","Recon=[0.4104, 0.4441], Bottleneck_Std=0.0344",True,PASS ✅
+ST-03: Zero-Step Loss (AUX1 45-Spk),ln(45) = 3.806 ± 0.25,Live Uninitialized CE(45) = 3.8370 (Theory: 3.8067),True,PASS ✅
+ST-04: Zero-Step Loss (PD 2-Class),ln(2) = 0.693 ± 0.10,Live Uninitialized CE(2) = 0.7124 (Theory: 0.6931),True,PASS ✅
+ST-05: Checkpoint Weight L2 Norm,"Finite & Active in [0.5, 10.0]",Measured Checkpoint Mean L2 Norm = 3.8578 (No NaN/Inf),True,PASS ✅
+ST-06: Soft-Voting Probabilities,P(HC) + P(PD) == 1.0000,Mean Sum = 1.0000 across 100 Speakers,True,PASS ✅

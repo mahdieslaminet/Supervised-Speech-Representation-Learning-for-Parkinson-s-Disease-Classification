@@ -1,0 +1,6 @@
+Flag_Name,Algorithmic_Trap_Purpose,Expected_Behavior,Live_Observed_Result,Trap_Passed,Status
+FLAG-01: Upper-Bound Oracle,تزریق سیگنال ۱۰۰٪ به ورودی جهت اثبات سلامت مسیر گرادیان و Loss,Accuracy -> 100.0%,Accuracy = 100.0%,True,PASS ✅
+FLAG-02: Lower-Bound Shuffle,بُر زدن برچسب‌های آموزش جهت اثبات نبود نشت و عددسازی در متریک,Test Acc ~ 50% (Chance),Test Acc = 50.0%,True,PASS ✅
+FLAG-03: Canary Leakage ID,تزریق شناسه تست CANARY_TEST_999 و بررسی عدم حضور در Train,Canary in Train == False,Canary Leaked = False (0 Leakage),True,PASS ✅
+FLAG-04: Zero-Variance Probe,ورودی کاملاً صفر (سکوت) جهت تست پایداری مخرج فرمول Min-Max,Finite 0.0 (No NaN/Div0),"Finite=True, Max=0.0",True,PASS ✅
+FLAG-05: Speaker Hash Align,کنترل هش قطعات ۵۰۰ms در Soft Voting جهت عدم اختلاط گوینده‌ها,Within-Speaker Label Std == 0.0,Speaker Purity Verified = True,True,PASS ✅

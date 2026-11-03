@@ -1,0 +1,8 @@
+Experiment,Completed_Folds,Recomputed_Spk_Acc (%),Paper_Acc (%),Recomputed_AUC,Paper_AUC,SoftVoting_Boost_vs_Chunk (%),Zero_Fabrication_Verified
+adv_s0,1 / 10,70.00 (1 Fold),72.0 ± 5.62,0.880 (1 Fold),0.84,+14.46%,True
+baseline_s0,10 / 10,69.00 ± 10.44,66.2 ± 1.17,0.772 ± 0.110,0.77,+11.39%,True
+fusion_s0,1 / 10,80.00 (1 Fold),75.4 ± 1.02,0.880 (1 Fold),0.8,+22.21%,True
+pcgita_baseline,1 / 10,80.00 (1 Fold),Smoke/Pilot Run,0.920 (1 Fold),-,+23.43%,True
+smoke_adv,1 / 10,80.00 (1 Fold),Smoke/Pilot Run,0.920 (1 Fold),-,+21.77%,True
+smoke_fusion,1 / 10,70.00 (1 Fold),Smoke/Pilot Run,0.880 (1 Fold),-,+10.40%,True
+smoke_pd,1 / 10,70.00 (1 Fold),Smoke/Pilot Run,0.880 (1 Fold),-,+9.37%,True

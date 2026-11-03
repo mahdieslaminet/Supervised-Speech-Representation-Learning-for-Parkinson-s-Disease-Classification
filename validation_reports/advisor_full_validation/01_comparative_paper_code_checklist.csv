@@ -1,0 +1,6 @@
+ID,Layer,Paper_Standard,Live_Verified_in_Code,Routine_Passed,Status
+CMP-01,1. Data & 10-Fold Split,"100 Spk (50 PD, 50 HC), Speaker-Disjoint",Verified 100 Test Speaker Instances across 10 Folds (0 Overlap),True,PASS ✅
+CMP-02,2. Mel Preprocessing,"126x118 (500ms), Min-Max [0.0, 1.0]","Shape=(126, 118), Range=[0.0000, 1.0000]",True,PASS ✅
+CMP-03,3. AE Architecture,"2,230,977 Trainable Params (+704 BN Buffers)","Counted Live: 2,230,977 Trainable + 704 BN Buffers = 2,231,681",True,PASS ✅
+CMP-04,4. Aux1 & Aux2/DS MLPs,"AUX1(45-spk)=15,341 | AUX2/DS(2-class)=12,546","Counted Live: AUX1=15,341 | AUX2/DS=12,546 | Bottleneck=128D",True,PASS ✅
+CMP-05,5. Soft-Voting & Baseline,Baseline Acc: 66.20 ± 1.17% | AUC: 0.77 ± 0.02,Recomputed 10-Fold Acc=69.00% | AUC=0.772 (Boost: +11.39%),True,PASS ✅

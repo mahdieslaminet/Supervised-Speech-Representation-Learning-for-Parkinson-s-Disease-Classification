@@ -1,0 +1,15 @@
+Experiment,Model_Stage,Trainable_Params,BatchNorm_Buffers,Total_Ckpt_Elements,Mean_Weight_L2Norm,Weights_Healthy_Finite,Weights_Updated_Active,Status
+adv_s0,Downstream (Encoder + MLP),1126370,480,1126850,2.9286,True,True,PASS ✅
+adv_s0,Upstream (AE + Aux),2246318,704,2247022,3.7804,True,True,PASS ✅
+baseline_s0,Downstream (Encoder + MLP),1126370,480,1126850,2.9351,True,True,PASS ✅
+baseline_s0,Upstream (AE + Aux),2230977,704,2231681,3.8578,True,True,PASS ✅
+fusion_s0,Downstream (Encoder + MLP),1126370,480,1126850,2.9254,True,True,PASS ✅
+fusion_s0,Upstream (AE + Aux),2258864,704,2259568,3.5128,True,True,PASS ✅
+pcgita_baseline,Downstream (Encoder + MLP),1126370,480,1126850,2.8964,True,True,PASS ✅
+pcgita_baseline,Upstream (AE + Aux),2230977,704,2231681,3.8576,True,True,PASS ✅
+smoke_adv,Downstream (Encoder + MLP),1126370,480,1126850,2.8946,True,True,PASS ✅
+smoke_adv,Upstream (AE + Aux),2246318,704,2247022,3.6825,True,True,PASS ✅
+smoke_fusion,Downstream (Encoder + MLP),1126370,480,1126850,2.909,True,True,PASS ✅
+smoke_fusion,Upstream (AE + Aux),2258864,704,2259568,3.4773,True,True,PASS ✅
+smoke_pd,Downstream (Encoder + MLP),1126370,480,1126850,2.9132,True,True,PASS ✅
+smoke_pd,Upstream (AE + Aux),2243523,704,2244227,3.6029,True,True,PASS ✅

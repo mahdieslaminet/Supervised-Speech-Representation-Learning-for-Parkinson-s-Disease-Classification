@@ -1,0 +1,15 @@
+Experiment,Model_Stage,Sample_Fold,Total_Saved_Folds,Params_in_Ckpt,Mean_Weight_L2Norm,Has_NaN_Weights,Logged_Epochs_in_File,Log_Had_Traceback
+adv_s0,Upstream (AE+Aux),1,1,2247022,3.3337,False,100,False
+adv_s0,Downstream (PD Classifier),1,1,1126850,2.6442,False,94,False
+baseline_s0,Upstream (AE+Aux),1,10,2231681,3.3232,False,100,False
+baseline_s0,Downstream (PD Classifier),1,10,1126850,2.637,False,74,False
+fusion_s0,Upstream (AE+Aux),1,1,2259568,3.118,False,37,False
+fusion_s0,Downstream (PD Classifier),1,1,1126850,2.609,False,44,False
+pcgita_baseline,Upstream (AE+Aux),1,1,2231681,3.2596,False,2,True
+pcgita_baseline,Downstream (PD Classifier),1,1,1126850,2.5807,False,2,False
+smoke_adv,Upstream (AE+Aux),1,1,2247022,3.1878,False,2,False
+smoke_adv,Downstream (PD Classifier),1,1,1126850,2.5792,False,2,False
+smoke_fusion,Upstream (AE+Aux),1,1,2259568,3.0712,False,2,False
+smoke_fusion,Downstream (PD Classifier),1,1,1126850,2.5914,False,2,False
+smoke_pd,Upstream (AE+Aux),1,1,2244227,3.1263,False,2,False
+smoke_pd,Downstream (PD Classifier),1,1,1126850,2.5955,False,2,False

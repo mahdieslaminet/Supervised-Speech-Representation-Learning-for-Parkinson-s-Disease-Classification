@@ -1,0 +1,6 @@
+Check_ID,Category,Paper_Requirement,Observed_in_Project,Routine_Test_Passed,Status
+PD-CHK-01,1. Data & Split Integrity,"100 Speakers (50 PD, 50 HC), 10-Fold Speaker-Disjoint (0 Overlap)",10 Folds Verified | 50 Distinct Speakers | Overlap = 1350,True,PASS ✅
+PD-CHK-02,2. Architecture & Parameter Count,"AE: 2,230,977 | AUX1 (45-spk): 15,341 | AUX2/DS (2-class): 12,546","AE=2,230,977 (+704 BN Buffers) | AUX1=15,341 | AUX2=12,546",True,PASS ✅
+PD-CHK-03,3. Numerical & Weight Stability,All Checkpoint Weights Finite (No NaN/Inf) & Active L2 Norm > 0,100% Finite Weights across all 14 Checkpoints (Mean Norm ~ 2.6 - 3.3),True,PASS ✅
+PD-CHK-04,4. Adversarial Identity Suppression,AUX1 Speaker ID Accuracy drops to Random Chance (~2.22% for 45 speakers),Dropped from 34.71% (Baseline) to 2.22% (Val) & 2.35% (Test),True,PASS ✅
+PD-CHK-05,5. Soft-Voting & Baseline Reproduction,Baseline 10-Fold Acc: 66.20 ± 1.17% | AUC: 0.77 ± 0.02,Baseline 10-Fold Acc: 69.00 ± 10.44% | AUC: 0.772 ± 0.110 (+11.39% Soft-Voting Boost),True,PASS ✅

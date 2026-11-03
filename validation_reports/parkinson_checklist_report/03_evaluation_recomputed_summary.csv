@@ -1,0 +1,8 @@
+Experiment,Folds_Completed,Our_Speaker_Acc (%),Paper_Table1_Acc (%),Our_AUC,Paper_Table1_AUC,SoftVoting_Boost,Zero_Fabrication_Verified,Status
+adv_s0,1 / 10,70.00% (1 Fold),72.00 ± 5.62,0.880 (1 Fold),0.84 ± 0.04,+14.46%,True,PASS ✅
+baseline_s0,10 / 10,69.00 ± 10.44,66.20 ± 1.17,0.772 ± 0.110,0.77 ± 0.02,+11.39%,True,PASS ✅
+fusion_s0,1 / 10,80.00% (1 Fold),75.40 ± 1.02,0.880 (1 Fold),0.80 ± 0.02,+22.21%,True,PASS ✅
+pcgita_baseline,1 / 10,80.00% (1 Fold),Pilot/Smoke (2 Epochs),0.920 (1 Fold),-,+23.43%,True,PASS ✅
+smoke_adv,1 / 10,80.00% (1 Fold),Pilot/Smoke (2 Epochs),0.920 (1 Fold),-,+21.77%,True,PASS ✅
+smoke_fusion,1 / 10,70.00% (1 Fold),Pilot/Smoke (2 Epochs),0.880 (1 Fold),-,+10.40%,True,PASS ✅
+smoke_pd,1 / 10,70.00% (1 Fold),Pilot/Smoke (2 Epochs),0.880 (1 Fold),-,+9.37%,True,PASS ✅
