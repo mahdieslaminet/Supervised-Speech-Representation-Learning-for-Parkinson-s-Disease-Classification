@@ -1,0 +1,40 @@
+# STRICT DUA PROTECTION - NEVER UPLOAD PRIVATE DATA
+*pcgita*
+*PCGITA*
+*AC00*
+*A00*
+data/
+mini_trace_exports/
+evidence/
+readable_exports/
+preprocess/pilot_pcgita_10spk/
+preprocess/pilot_pcgita_20spk/
+preprocess/pcgita_full_100spk/
+
+# Ignore all audio files except the 6 public dummy samples
+*.wav
+!preprocess/dummy_database/audio_data/spk1.wav
+!preprocess/dummy_database/audio_data/spk2.wav
+!preprocess/dummy_database/audio_data/spk3.wav
+!preprocess/dummy_database/audio_data/spk4.wav
+!preprocess/dummy_database/audio_data/spk5.wav
+!preprocess/dummy_database/audio_data/spk6.wav
+
+# Ignore heavy binaries & checkpoints
+*.tar
+*.tar.gz
+*.zip
+*.ckpt
+*.pt
+*.pth
+*.npy
+*.npz
+
+# Python & Notebook caches
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+
+# Allow generated features ONLY for the 6 public dummy samples
+!preprocess/dummy_database/segmented_audio_data/*.wav
+!preprocess/dummy_database/fbank_features/*.npy
