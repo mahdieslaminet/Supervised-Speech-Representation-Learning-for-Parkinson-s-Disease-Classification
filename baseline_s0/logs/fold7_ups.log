@@ -1,0 +1,247 @@
+
+===== 2026-10-13 11:43:12  /usr/bin/python3 train_upstream.py -c /content/repo/my_experiments/configs/baseline_s0/upstream_config.yaml -ac1 /content/repo/my_experiments/configs/baseline_s0/upstream_auxiliary1_config.yaml -ac2 /content/repo/my_experiments/configs/baseline_s0/upstream_auxiliary2_config.yaml -a /content/repo/my_experiments/configs/baseline_s0/audio_config.yaml -n baseline_s0 -s 0 --fold 7 --valmonitor
+Using device: cuda:0
+Tesla T4
+---args:  Namespace(config='results/baseline_s0/ups-baseline_s0//ups_config.yaml', auxconfig1='results/baseline_s0/ups-baseline_s0//aux1_config.yaml', auxconfig2='results/baseline_s0/ups-baseline_s0//aux2_config.yaml', audio_config='results/baseline_s0/ups-baseline_s0//feat_config.yaml', seed=0, device='cuda', expname='baseline_s0', auxiltr=False, auxlossw1=0, auxlossw2=0, valmonitor=True, newinit=False, verbose=False, fold='7')
+
+----UPSTREAM DATA
+
+
+train Data...
+
+train file reading fold 7 [offline]...
+[Dataset] - Sampling random segments with sample length: 118 frames
+[Dataset] - Number of individual utterance instances: 2264
+batchsize 128
+
+
+val Data...
+
+val file reading fold 7 [offline]...
+[Dataset] - Sampling random segments with sample length: 118 frames
+[Dataset] - Number of individual utterance instances: 261
+batchsize 128
+
+ Monitoring the training based on validation set.
+
+
+test Data...
+
+test file reading fold 7 [offline]...
+[Dataset] - Sampling random segments with sample length: 118 frames
+[Dataset] - Number of individual utterance instances: 300
+batchsize 128
+
+[RepresentationPretrain] - Initializing model...
+RepresentationPretrain: AECNNNet - Number of parameters: 2230977
+
+
+AECNNNet(
+  (EncoderNet): AECNNNetEnc(
+    (nonlinearity): LeakyReLU(negative_slope=0.01)
+    (dropout): Dropout(p=0.0, inplace=False)
+    (maxpool): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+    (EncoderCNN): Sequential(
+      (0): Dropout(p=0.0, inplace=False)
+      (1): Conv2d(1, 16, kernel_size=(3, 3), stride=(1, 1))
+      (2): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+      (3): BatchNorm2d(16, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (4): LeakyReLU(negative_slope=0.01)
+      (5): Conv2d(16, 32, kernel_size=(3, 3), stride=(1, 1))
+      (6): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+      (7): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (8): LeakyReLU(negative_slope=0.01)
+      (9): Conv2d(32, 64, kernel_size=(3, 3), stride=(1, 1))
+      (10): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+      (11): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (12): LeakyReLU(negative_slope=0.01)
+      (13): Conv2d(64, 128, kernel_size=(3, 3), stride=(1, 1))
+      (14): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+      (15): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (16): LeakyReLU(negative_slope=0.01)
+    )
+    (EncoderMLP): Sequential(
+      (0): Linear(in_features=3840, out_features=256, bias=True)
+      (1): LeakyReLU(negative_slope=0.01)
+      (2): Linear(in_features=256, out_features=128, bias=True)
+    )
+  )
+  (DecoderNet): AECNNNetDec(
+    (nonlinearity): LeakyReLU(negative_slope=0.01)
+    (dropout): Dropout(p=0.0, inplace=False)
+    (maxpool): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+    (DecoderMLP): Sequential(
+      (0): Linear(in_features=128, out_features=256, bias=True)
+      (1): LeakyReLU(negative_slope=0.01)
+      (2): Linear(in_features=256, out_features=3840, bias=True)
+    )
+    (DecoderCNN): Sequential(
+      (0): Interpolate()
+      (1): ConvTranspose2d(128, 64, kernel_size=(3, 3), stride=(1, 1))
+      (2): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (3): LeakyReLU(negative_slope=0.01)
+      (4): Interpolate()
+      (5): ConvTranspose2d(64, 32, kernel_size=(3, 3), stride=(1, 1))
+      (6): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (7): LeakyReLU(negative_slope=0.01)
+      (8): Interpolate()
+      (9): ConvTranspose2d(32, 16, kernel_size=(3, 3), stride=(1, 1))
+      (10): BatchNorm2d(16, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (11): LeakyReLU(negative_slope=0.01)
+      (12): Interpolate()
+      (13): ConvTranspose2d(16, 1, kernel_size=(3, 3), stride=(1, 1))
+      (14): Sigmoid()
+    )
+  )
+)
+ - AE Loss Function:  MSELoss() 
+
+ Epoch [  0/100]-TRAIN:  total: 0.04384,  ups_AE: 0.04384,  -VAL: total: 0.03054, ups_AE: 0.03054,  
+ Epoch [  1/100]-TRAIN:  total: 0.02756,  ups_AE: 0.02756,  -VAL: total: 0.02552, ups_AE: 0.02552,  
+ Epoch [  2/100]-TRAIN:  total: 0.02451,  ups_AE: 0.02451,  -VAL: total: 0.02323, ups_AE: 0.02323,  
+ Epoch [  3/100]-TRAIN:  total: 0.02281,  ups_AE: 0.02281,  -VAL: total: 0.02170, ups_AE: 0.02170,  
+ Epoch [  4/100]-TRAIN:  total: 0.02163,  ups_AE: 0.02163,  -VAL: total: 0.02068, ups_AE: 0.02068,  
+ Epoch [  5/100]-TRAIN:  total: 0.02071,  ups_AE: 0.02071,  -VAL: total: 0.01982, ups_AE: 0.01982,  
+ Epoch [  6/100]-TRAIN:  total: 0.01997,  ups_AE: 0.01997,  -VAL: total: 0.01913, ups_AE: 0.01913,  
+ Epoch [  7/100]-TRAIN:  total: 0.01934,  ups_AE: 0.01934,  -VAL: total: 0.01853, ups_AE: 0.01853,  
+ Epoch [  8/100]-TRAIN:  total: 0.01879,  ups_AE: 0.01879,  -VAL: total: 0.01803, ups_AE: 0.01803,  
+ Epoch [  9/100]-TRAIN:  total: 0.01831,  ups_AE: 0.01831,  -VAL: total: 0.01760, ups_AE: 0.01760,  
+ Epoch [ 10/100]-TRAIN:  total: 0.01787,  ups_AE: 0.01787,  -VAL: total: 0.01719, ups_AE: 0.01719,  
+ Epoch [ 11/100]-TRAIN:  total: 0.01748,  ups_AE: 0.01748,  -VAL: total: 0.01681, ups_AE: 0.01681,  
+ Epoch [ 12/100]-TRAIN:  total: 0.01712,  ups_AE: 0.01712,  -VAL: total: 0.01648, ups_AE: 0.01648,  
+ Epoch [ 13/100]-TRAIN:  total: 0.01679,  ups_AE: 0.01679,  -VAL: total: 0.01619, ups_AE: 0.01619,  
+ Epoch [ 14/100]-TRAIN:  total: 0.01649,  ups_AE: 0.01649,  -VAL: total: 0.01591, ups_AE: 0.01591,  
+ Epoch [ 15/100]-TRAIN:  total: 0.01621,  ups_AE: 0.01621,  -VAL: total: 0.01567, ups_AE: 0.01567,  
+ Epoch [ 16/100]-TRAIN:  total: 0.01594,  ups_AE: 0.01594,  -VAL: total: 0.01541, ups_AE: 0.01541,  
+ Epoch [ 17/100]-TRAIN:  total: 0.01571,  ups_AE: 0.01571,  -VAL: total: 0.01520, ups_AE: 0.01520,  
+ Epoch [ 18/100]-TRAIN:  total: 0.01548,  ups_AE: 0.01548,  -VAL: total: 0.01499, ups_AE: 0.01499,  
+ Epoch [ 19/100]-TRAIN:  total: 0.01527,  ups_AE: 0.01527,  -VAL: total: 0.01480, ups_AE: 0.01480,  
+ Epoch [ 20/100]-TRAIN:  total: 0.01508,  ups_AE: 0.01508,  -VAL: total: 0.01464, ups_AE: 0.01464,  
+ Epoch [ 21/100]-TRAIN:  total: 0.01489,  ups_AE: 0.01489,  -VAL: total: 0.01447, ups_AE: 0.01447,  
+ Epoch [ 22/100]-TRAIN:  total: 0.01472,  ups_AE: 0.01472,  -VAL: total: 0.01431, ups_AE: 0.01431,  
+ Epoch [ 23/100]-TRAIN:  total: 0.01456,  ups_AE: 0.01456,  -VAL: total: 0.01416, ups_AE: 0.01416,  
+ Epoch [ 24/100]-TRAIN:  total: 0.01441,  ups_AE: 0.01441,  -VAL: total: 0.01404, ups_AE: 0.01404,  
+ Epoch [ 25/100]-TRAIN:  total: 0.01426,  ups_AE: 0.01426,  -VAL: total: 0.01390, ups_AE: 0.01390,  
+ Epoch [ 26/100]-TRAIN:  total: 0.01413,  ups_AE: 0.01413,  -VAL: total: 0.01378, ups_AE: 0.01378,  
+ Epoch [ 27/100]-TRAIN:  total: 0.01400,  ups_AE: 0.01400,  -VAL: total: 0.01366, ups_AE: 0.01366,  
+ Epoch [ 28/100]-TRAIN:  total: 0.01387,  ups_AE: 0.01387,  -VAL: total: 0.01355, ups_AE: 0.01355,  
+ Epoch [ 29/100]-TRAIN:  total: 0.01376,  ups_AE: 0.01376,  -VAL: total: 0.01344, ups_AE: 0.01344,  
+ Epoch [ 30/100]-TRAIN:  total: 0.01364,  ups_AE: 0.01364,  -VAL: total: 0.01334, ups_AE: 0.01334,  
+ Epoch [ 31/100]-TRAIN:  total: 0.01354,  ups_AE: 0.01354,  -VAL: total: 0.01324, ups_AE: 0.01324,  
+ Epoch [ 32/100]-TRAIN:  total: 0.01343,  ups_AE: 0.01343,  -VAL: total: 0.01314, ups_AE: 0.01314,  
+ Epoch [ 33/100]-TRAIN:  total: 0.01333,  ups_AE: 0.01333,  -VAL: total: 0.01306, ups_AE: 0.01306,  
+ Epoch [ 34/100]-TRAIN:  total: 0.01324,  ups_AE: 0.01324,  -VAL: total: 0.01297, ups_AE: 0.01297,  
+ Epoch [ 35/100]-TRAIN:  total: 0.01315,  ups_AE: 0.01315,  -VAL: total: 0.01289, ups_AE: 0.01289,  
+ Epoch [ 36/100]-TRAIN:  total: 0.01306,  ups_AE: 0.01306,  -VAL: total: 0.01281, ups_AE: 0.01281,  
+ Epoch [ 37/100]-TRAIN:  total: 0.01297,  ups_AE: 0.01297,  -VAL: total: 0.01273, ups_AE: 0.01273,  
+ Epoch [ 38/100]-TRAIN:  total: 0.01289,  ups_AE: 0.01289,  -VAL: total: 0.01265, ups_AE: 0.01265,  
+ Epoch [ 39/100]-TRAIN:  total: 0.01281,  ups_AE: 0.01281,  -VAL: total: 0.01259, ups_AE: 0.01259,  
+ Epoch [ 40/100]-TRAIN:  total: 0.01274,  ups_AE: 0.01274,  -VAL: total: 0.01252, ups_AE: 0.01252,  
+ Epoch [ 41/100]-TRAIN:  total: 0.01267,  ups_AE: 0.01267,  -VAL: total: 0.01245, ups_AE: 0.01245,  
+ Epoch [ 42/100]-TRAIN:  total: 0.01260,  ups_AE: 0.01260,  -VAL: total: 0.01238, ups_AE: 0.01238,  
+ Epoch [ 43/100]-TRAIN:  total: 0.01253,  ups_AE: 0.01253,  -VAL: total: 0.01232, ups_AE: 0.01232,  
+ Epoch [ 44/100]-TRAIN:  total: 0.01246,  ups_AE: 0.01246,  -VAL: total: 0.01226, ups_AE: 0.01226,  
+ Epoch [ 45/100]-TRAIN:  total: 0.01240,  ups_AE: 0.01240,  -VAL: total: 0.01220, ups_AE: 0.01220,  
+ Epoch [ 46/100]-TRAIN:  total: 0.01234,  ups_AE: 0.01234,  -VAL: total: 0.01215, ups_AE: 0.01215,  
+ Epoch [ 47/100]-TRAIN:  total: 0.01228,  ups_AE: 0.01228,  -VAL: total: 0.01209, ups_AE: 0.01209,  
+ Epoch [ 48/100]-TRAIN:  total: 0.01222,  ups_AE: 0.01222,  -VAL: total: 0.01204, ups_AE: 0.01204,  
+ Epoch [ 49/100]-TRAIN:  total: 0.01216,  ups_AE: 0.01216,  -VAL: total: 0.01198, ups_AE: 0.01198,  
+ Epoch [ 50/100]-TRAIN:  total: 0.01210,  ups_AE: 0.01210,  -VAL: total: 0.01193, ups_AE: 0.01193,  
+ Epoch [ 51/100]-TRAIN:  total: 0.01206,  ups_AE: 0.01206,  -VAL: total: 0.01188, ups_AE: 0.01188,  
+ Epoch [ 52/100]-TRAIN:  total: 0.01200,  ups_AE: 0.01200,  -VAL: total: 0.01184, ups_AE: 0.01184,  
+ Epoch [ 53/100]-TRAIN:  total: 0.01195,  ups_AE: 0.01195,  -VAL: total: 0.01179, ups_AE: 0.01179,  
+ Epoch [ 54/100]-TRAIN:  total: 0.01190,  ups_AE: 0.01190,  -VAL: total: 0.01174, ups_AE: 0.01174,  
+ Epoch [ 55/100]-TRAIN:  total: 0.01185,  ups_AE: 0.01185,  -VAL: total: 0.01170, ups_AE: 0.01170,  
+ Epoch [ 56/100]-TRAIN:  total: 0.01180,  ups_AE: 0.01180,  -VAL: total: 0.01166, ups_AE: 0.01166,  
+ Epoch [ 57/100]-TRAIN:  total: 0.01176,  ups_AE: 0.01176,  -VAL: total: 0.01161, ups_AE: 0.01161,  
+ Epoch [ 58/100]-TRAIN:  total: 0.01172,  ups_AE: 0.01172,  -VAL: total: 0.01157, ups_AE: 0.01157,  
+ Epoch [ 59/100]-TRAIN:  total: 0.01166,  ups_AE: 0.01166,  -VAL: total: 0.01153, ups_AE: 0.01153,  
+ Epoch [ 60/100]-TRAIN:  total: 0.01162,  ups_AE: 0.01162,  -VAL: total: 0.01149, ups_AE: 0.01149,  
+ Epoch [ 61/100]-TRAIN:  total: 0.01158,  ups_AE: 0.01158,  -VAL: total: 0.01146, ups_AE: 0.01146,  
+ Epoch [ 62/100]-TRAIN:  total: 0.01154,  ups_AE: 0.01154,  -VAL: total: 0.01141, ups_AE: 0.01141,  
+ Epoch [ 63/100]-TRAIN:  total: 0.01150,  ups_AE: 0.01150,  -VAL: total: 0.01138, ups_AE: 0.01138,  
+ Epoch [ 64/100]-TRAIN:  total: 0.01146,  ups_AE: 0.01146,  -VAL: total: 0.01134, ups_AE: 0.01134,  
+ Epoch [ 65/100]-TRAIN:  total: 0.01142,  ups_AE: 0.01142,  -VAL: total: 0.01130, ups_AE: 0.01130,  
+ Epoch [ 66/100]-TRAIN:  total: 0.01138,  ups_AE: 0.01138,  -VAL: total: 0.01127, ups_AE: 0.01127,  
+ Epoch [ 67/100]-TRAIN:  total: 0.01135,  ups_AE: 0.01135,  -VAL: total: 0.01123, ups_AE: 0.01123,  
+ Epoch [ 68/100]-TRAIN:  total: 0.01131,  ups_AE: 0.01131,  -VAL: total: 0.01120, ups_AE: 0.01120,  
+ Epoch [ 69/100]-TRAIN:  total: 0.01127,  ups_AE: 0.01127,  -VAL: total: 0.01116, ups_AE: 0.01116,  
+ Epoch [ 70/100]-TRAIN:  total: 0.01124,  ups_AE: 0.01124,  -VAL: total: 0.01113, ups_AE: 0.01113,  
+ Epoch [ 71/100]-TRAIN:  total: 0.01120,  ups_AE: 0.01120,  -VAL: total: 0.01110, ups_AE: 0.01110,  
+ Epoch [ 72/100]-TRAIN:  total: 0.01117,  ups_AE: 0.01117,  -VAL: total: 0.01107, ups_AE: 0.01107,  
+ Epoch [ 73/100]-TRAIN:  total: 0.01113,  ups_AE: 0.01113,  -VAL: total: 0.01104, ups_AE: 0.01104,  
+ Epoch [ 74/100]-TRAIN:  total: 0.01111,  ups_AE: 0.01111,  -VAL: total: 0.01101, ups_AE: 0.01101,  
+ Epoch [ 75/100]-TRAIN:  total: 0.01107,  ups_AE: 0.01107,  -VAL: total: 0.01098, ups_AE: 0.01098,  
+ Epoch [ 76/100]-TRAIN:  total: 0.01104,  ups_AE: 0.01104,  -VAL: total: 0.01095, ups_AE: 0.01095,  
+ Epoch [ 77/100]-TRAIN:  total: 0.01101,  ups_AE: 0.01101,  -VAL: total: 0.01092, ups_AE: 0.01092,  
+ Epoch [ 78/100]-TRAIN:  total: 0.01098,  ups_AE: 0.01098,  -VAL: total: 0.01090, ups_AE: 0.01090,  
+ Epoch [ 79/100]-TRAIN:  total: 0.01095,  ups_AE: 0.01095,  -VAL: total: 0.01087, ups_AE: 0.01087,  
+ Epoch [ 80/100]-TRAIN:  total: 0.01092,  ups_AE: 0.01092,  -VAL: total: 0.01084, ups_AE: 0.01084,  
+ Epoch [ 81/100]-TRAIN:  total: 0.01089,  ups_AE: 0.01089,  -VAL: total: 0.01081, ups_AE: 0.01081,  
+ Epoch [ 82/100]-TRAIN:  total: 0.01086,  ups_AE: 0.01086,  -VAL: total: 0.01079, ups_AE: 0.01079,  
+ Epoch [ 83/100]-TRAIN:  total: 0.01083,  ups_AE: 0.01083,  -VAL: total: 0.01076, ups_AE: 0.01076,  
+ Epoch [ 84/100]-TRAIN:  total: 0.01081,  ups_AE: 0.01081,  -VAL: total: 0.01074, ups_AE: 0.01074,  
+ Epoch [ 85/100]-TRAIN:  total: 0.01078,  ups_AE: 0.01078,  -VAL: total: 0.01071, ups_AE: 0.01071,  
+ Epoch [ 86/100]-TRAIN:  total: 0.01076,  ups_AE: 0.01076,  -VAL: total: 0.01069, ups_AE: 0.01069,  
+ Epoch [ 87/100]-TRAIN:  total: 0.01073,  ups_AE: 0.01073,  -VAL: total: 0.01066, ups_AE: 0.01066,  
+ Epoch [ 88/100]-TRAIN:  total: 0.01070,  ups_AE: 0.01070,  -VAL: total: 0.01064, ups_AE: 0.01064,  
+ Epoch [ 89/100]-TRAIN:  total: 0.01068,  ups_AE: 0.01068,  -VAL: total: 0.01062, ups_AE: 0.01062,  
+ Epoch [ 90/100]-TRAIN:  total: 0.01065,  ups_AE: 0.01065,  -VAL: total: 0.01060, ups_AE: 0.01060,  
+ Epoch [ 91/100]-TRAIN:  total: 0.01063,  ups_AE: 0.01063,  -VAL: total: 0.01057, ups_AE: 0.01057,  
+ Epoch [ 92/100]-TRAIN:  total: 0.01061,  ups_AE: 0.01061,  -VAL: total: 0.01055, ups_AE: 0.01055,  
+ Epoch [ 93/100]-TRAIN:  total: 0.01058,  ups_AE: 0.01058,  -VAL: total: 0.01053, ups_AE: 0.01053,  
+ Epoch [ 94/100]-TRAIN:  total: 0.01056,  ups_AE: 0.01056,  -VAL: total: 0.01051, ups_AE: 0.01051,  
+ Epoch [ 95/100]-TRAIN:  total: 0.01054,  ups_AE: 0.01054,  -VAL: total: 0.01049, ups_AE: 0.01049,  
+ Epoch [ 96/100]-TRAIN:  total: 0.01051,  ups_AE: 0.01051,  -VAL: total: 0.01047, ups_AE: 0.01047,  
+ Epoch [ 97/100]-TRAIN:  total: 0.01049,  ups_AE: 0.01049,  -VAL: total: 0.01045, ups_AE: 0.01045,  
+ Epoch [ 98/100]-TRAIN:  total: 0.01047,  ups_AE: 0.01047,  -VAL: total: 0.01043, ups_AE: 0.01043,  
+ Epoch [ 99/100]-TRAIN:  total: 0.01045,  ups_AE: 0.01045,  -VAL: total: 0.01041, ups_AE: 0.01041,  
+
+Final Model VAL: -->  total: 0.01041, ups_AE: 0.01041,  val_loss_Estop: 0.01041
+
+
+Final Model --> test ups_AE: 0.01044, total: 0.01044, val aux1 chunk accuracy None, val aux2 chunk accuracy None, 
+
+
+---------test data---------- 
+
+	LOSS: total: 0.01044, ups_AE: 0.01044,   
+	chunk-level aux1 accuracy: None 
+	----- speaker level evaluation 
+	chunk-level aux2 accuracy: None 
+	----- speaker level evaluation 
+
+
+Final Model --> val ups_AE: 0.01041, total: 0.01041, val aux1 chunk accuracy None, val aux2 chunk accuracy None, 
+
+
+---------val data---------- 
+
+	LOSS: total: 0.01041, ups_AE: 0.01041,   
+	chunk-level aux1 accuracy: None 
+	----- speaker level evaluation 
+	chunk-level aux2 accuracy: None 
+	----- speaker level evaluation 
+
+
+Final Model --> train ups_AE: 0.01041, total: 0.01041, val aux1 chunk accuracy None, val aux2 chunk accuracy None, 
+
+
+---------train data---------- 
+
+	LOSS: total: 0.01041, ups_AE: 0.01041,   
+	chunk-level aux1 accuracy: None 
+	----- speaker level evaluation 
+	chunk-level aux2 accuracy: None 
+	----- speaker level evaluation 
+
+
+Final Model --> test ups_AE: 0.01044, total: 0.01044, val aux1 chunk accuracy None, val aux2 chunk accuracy None, 
+
+
+Final Model --> val ups_AE: 0.01041, total: 0.01041, val aux1 chunk accuracy None, val aux2 chunk accuracy None, 
+
+
+Final Model --> train ups_AE: 0.01041, total: 0.01041, val aux1 chunk accuracy None, val aux2 chunk accuracy None, 
+
+===== exit 0 after 1783s

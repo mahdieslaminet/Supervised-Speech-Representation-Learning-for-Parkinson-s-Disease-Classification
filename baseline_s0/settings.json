@@ -1,0 +1,8 @@
+{
+ "method": "baseline",
+ "epochs": 100,
+ "batch": 128,
+ "seed": 0,
+ "data_dir": "preprocess/pcgita_full_100spk",
+ "n_folds": 10
+}
