@@ -1,0 +1,578 @@
+
+===== 2026-10-15 14:53:17  /usr/bin/python3 train_upstream.py -c /content/repo/my_experiments/configs/fusion_s0/upstream_config.yaml -ac1 /content/repo/my_experiments/configs/fusion_s0/upstream_auxiliary1_config.yaml -ac2 /content/repo/my_experiments/configs/fusion_s0/upstream_auxiliary2_config.yaml -a /content/repo/my_experiments/configs/fusion_s0/audio_config.yaml -n fusion_s0 -s 0 --fold 1 --valmonitor --auxiltr --auxlossw1 -0.01 --auxlossw2 0.01
+Using device: cuda:0
+Tesla T4
+---args:  Namespace(config='results/fusion_s0/ups-fusion_s0//ups_config.yaml', auxconfig1='results/fusion_s0/ups-fusion_s0//aux1_config.yaml', auxconfig2='results/fusion_s0/ups-fusion_s0//aux2_config.yaml', audio_config='results/fusion_s0/ups-fusion_s0//feat_config.yaml', seed=0, device='cuda', expname='fusion_s0', auxiltr=True, auxlossw1=-0.01, auxlossw2=0.01, valmonitor=True, newinit=False, verbose=False, fold='1')
+AUX1 added to training with loss weight -0.01
+AUX2 added to training with loss weight 0.01
+
+----UPSTREAM DATA
+
+
+train Data...
+
+train file reading fold 1 [offline]...
+[Dataset] - Sampling random segments with sample length: 118 frames
+[Dataset] - Number of individual utterance instances: 2251
+batchsize 128
+
+
+val Data...
+
+val file reading fold 1 [offline]...
+[Dataset] - Sampling random segments with sample length: 118 frames
+[Dataset] - Number of individual utterance instances: 277
+batchsize 128
+
+ Monitoring the training based on validation set.
+
+
+test Data...
+
+test file reading fold 1 [offline]...
+[Dataset] - Sampling random segments with sample length: 118 frames
+[Dataset] - Number of individual utterance instances: 297
+batchsize 128
+
+----AUX1 DATA
+
+
+train Data...
+
+train file reading fold 1 [offline]...
+[Dataset] - Sampling random segments with sample length: 118 frames
+[Dataset] - Number of individual utterance instances: 803
+batchsize 128
+
+
+val Data...
+
+val file reading fold 1 [offline]...
+[Dataset] - Sampling random segments with sample length: 118 frames
+[Dataset] - Number of individual utterance instances: 268
+batchsize 128
+
+ Monitoring training aux1 based on validation set.
+
+----AUX2 DATA
+
+
+train Data...
+
+train file reading fold 1 [offline]...
+[Dataset] - Sampling random segments with sample length: 118 frames
+[Dataset] - Number of individual utterance instances: 2251
+batchsize 128
+
+
+val Data...
+
+val file reading fold 1 [offline]...
+[Dataset] - Sampling random segments with sample length: 118 frames
+[Dataset] - Number of individual utterance instances: 277
+batchsize 128
+
+ Monitoring training aux2 based on validation set.
+
+
+test Data...
+
+test file reading fold 1 [offline]...
+[Dataset] - Sampling random segments with sample length: 118 frames
+[Dataset] - Number of individual utterance instances: 266
+batchsize 128
+
+
+test Data...
+
+test file reading fold 1 [offline]...
+[Dataset] - Sampling random segments with sample length: 118 frames
+[Dataset] - Number of individual utterance instances: 297
+batchsize 128
+
+[RepresentationPretrain] - Initializing model...
+RepresentationPretrain: AECNNNet - Number of parameters: 2230977
+
+
+AECNNNet(
+  (EncoderNet): AECNNNetEnc(
+    (nonlinearity): LeakyReLU(negative_slope=0.01)
+    (dropout): Dropout(p=0.0, inplace=False)
+    (maxpool): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+    (EncoderCNN): Sequential(
+      (0): Dropout(p=0.0, inplace=False)
+      (1): Conv2d(1, 16, kernel_size=(3, 3), stride=(1, 1))
+      (2): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+      (3): BatchNorm2d(16, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (4): LeakyReLU(negative_slope=0.01)
+      (5): Conv2d(16, 32, kernel_size=(3, 3), stride=(1, 1))
+      (6): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+      (7): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (8): LeakyReLU(negative_slope=0.01)
+      (9): Conv2d(32, 64, kernel_size=(3, 3), stride=(1, 1))
+      (10): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+      (11): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (12): LeakyReLU(negative_slope=0.01)
+      (13): Conv2d(64, 128, kernel_size=(3, 3), stride=(1, 1))
+      (14): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+      (15): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (16): LeakyReLU(negative_slope=0.01)
+    )
+    (EncoderMLP): Sequential(
+      (0): Linear(in_features=3840, out_features=256, bias=True)
+      (1): LeakyReLU(negative_slope=0.01)
+      (2): Linear(in_features=256, out_features=128, bias=True)
+    )
+  )
+  (DecoderNet): AECNNNetDec(
+    (nonlinearity): LeakyReLU(negative_slope=0.01)
+    (dropout): Dropout(p=0.0, inplace=False)
+    (maxpool): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+    (DecoderMLP): Sequential(
+      (0): Linear(in_features=128, out_features=256, bias=True)
+      (1): LeakyReLU(negative_slope=0.01)
+      (2): Linear(in_features=256, out_features=3840, bias=True)
+    )
+    (DecoderCNN): Sequential(
+      (0): Interpolate()
+      (1): ConvTranspose2d(128, 64, kernel_size=(3, 3), stride=(1, 1))
+      (2): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (3): LeakyReLU(negative_slope=0.01)
+      (4): Interpolate()
+      (5): ConvTranspose2d(64, 32, kernel_size=(3, 3), stride=(1, 1))
+      (6): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (7): LeakyReLU(negative_slope=0.01)
+      (8): Interpolate()
+      (9): ConvTranspose2d(32, 16, kernel_size=(3, 3), stride=(1, 1))
+      (10): BatchNorm2d(16, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (11): LeakyReLU(negative_slope=0.01)
+      (12): Interpolate()
+      (13): ConvTranspose2d(16, 1, kernel_size=(3, 3), stride=(1, 1))
+      (14): Sigmoid()
+    )
+  )
+)
+[RepresentationPretrain] - Loading model weights from the init ckpt from:  /results/fusion_s0/ups-fusion_s0/outputs/saved_model/UPs_NN_fold1.ckpt
+AUX1
+
+[Auxiliary Classifier] - Initializing model...
+AuxiliaryTrain: MLP - Number of parameters: 15341
+
+
+[AuxiliaryTrain1] - Loading auxiliary model weights from the init ckpt from:  results/fusion_s0/ups-fusion_s0/outputs/saved_model/UPs_NN_fold1.ckpt
+AUX2
+
+[Auxiliary Classifier] - Initializing model...
+AuxiliaryTrain: MLP - Number of parameters: 12546
+
+
+[AuxiliaryTrain2] - Loading auxiliary model weights from the init ckpt from:  results/fusion_s0/ups-fusion_s0/outputs/saved_model/UPs_NN_fold1.ckpt
+
+[Runner Optimizer] - Loading upstream optimizer weights from theinit ckpt from:  results/fusion_s0/ups-fusion_s0/outputs/saved_model/UPs_NN_fold1.ckpt
+
+[Runner Optimizer] - Loading auxiliary1 optimizer weights from the init ckpt...
+
+[Runner Optimizer] - Loading auxiliary2 optimizer weights from the init ckpt...
+ - AE Loss Function:  MSELoss() 
+
+ - AUX1 Loss Function:  CrossEntropyLoss() 
+
+ - AUX2 Loss Function:  CrossEntropyLoss() 
+
+  --> Processing Train Batch: 0
+  --> Processing Train Batch: 20
+  --> Processing Train Batch: 40
+  --> Processing Train Batch: 60
+  --> Processing Train Batch: 80
+  --> Processing Train Batch: 100
+  --> Processing Train Batch: 120
+ Epoch [  0/100]-TRAIN:  aux1: 3.72506,  aux2: 0.61021,  aux_AE: 0.01375,  total: -0.01777,  ups_AE: 0.01360,  -VAL: aux1: 3.91187, aux2: 0.77628, aux_AE: 0.01401, total: -0.01769, ups_AE: 0.01394,  val aux1 chunk accuracy 1.807501129688206,  val aux2 chunk accuracy 59.48693126815101,  
+  --> Processing Train Batch: 0
+  --> Processing Train Batch: 20
+  --> Processing Train Batch: 40
+  --> Processing Train Batch: 60
+  --> Processing Train Batch: 80
+  --> Processing Train Batch: 100
+  --> Processing Train Batch: 120
+ Epoch [  1/100]-TRAIN:  aux1: 3.72281,  aux2: 0.60860,  aux_AE: 0.01366,  total: -0.01790,  ups_AE: 0.01351,  -VAL: aux1: 3.90864, aux2: 0.78046, aux_AE: 0.01390, total: -0.01774, ups_AE: 0.01382,  val aux1 chunk accuracy 1.8526886579304112,  val aux2 chunk accuracy 59.728944820909966,  
+  --> Processing Train Batch: 0
+  --> Processing Train Batch: 20
+  --> Processing Train Batch: 40
+  --> Processing Train Batch: 60
+  --> Processing Train Batch: 80
+  --> Processing Train Batch: 100
+  --> Processing Train Batch: 120
+ Epoch [  2/100]-TRAIN:  aux1: 3.72025,  aux2: 0.60431,  aux_AE: 0.01355,  total: -0.01799,  ups_AE: 0.01341,  -VAL: aux1: 3.90786, aux2: 0.79170, aux_AE: 0.01382, total: -0.01770, ups_AE: 0.01374,  val aux1 chunk accuracy 1.807501129688206,  val aux2 chunk accuracy 59.92255566311714,  
+  --> Processing Train Batch: 0
+  --> Processing Train Batch: 20
+  --> Processing Train Batch: 40
+  --> Processing Train Batch: 60
+  --> Processing Train Batch: 80
+  --> Processing Train Batch: 100
+  --> Processing Train Batch: 120
+ Epoch [  3/100]-TRAIN:  aux1: 3.71769,  aux2: 0.59936,  aux_AE: 0.01347,  total: -0.01811,  ups_AE: 0.01332,  -VAL: aux1: 3.90681, aux2: 0.79416, aux_AE: 0.01374, total: -0.01773, ups_AE: 0.01367,  val aux1 chunk accuracy 1.6719385449615907,  val aux2 chunk accuracy 60.1161665053243,  
+  --> Processing Train Batch: 0
+  --> Processing Train Batch: 20
+  --> Processing Train Batch: 40
+  --> Processing Train Batch: 60
+  --> Processing Train Batch: 80
+  --> Processing Train Batch: 100
+  --> Processing Train Batch: 120
+ Epoch [  4/100]-TRAIN:  aux1: 3.71596,  aux2: 0.59472,  aux_AE: 0.01339,  total: -0.01821,  ups_AE: 0.01324,  -VAL: aux1: 3.90424, aux2: 0.78231, aux_AE: 0.01364, total: -0.01793, ups_AE: 0.01357,  val aux1 chunk accuracy 1.807501129688206,  val aux2 chunk accuracy 57.405614714424004,  
+  --> Processing Train Batch: 0
+  --> Processing Train Batch: 20
+  --> Processing Train Batch: 40
+  --> Processing Train Batch: 60
+  --> Processing Train Batch: 80
+  --> Processing Train Batch: 100
+  --> Processing Train Batch: 120
+ Epoch [  5/100]-TRAIN:  aux1: 3.71380,  aux2: 0.59305,  aux_AE: 0.01330,  total: -0.01830,  ups_AE: 0.01317,  -VAL: aux1: 3.90386, aux2: 0.78026, aux_AE: 0.01360, total: -0.01799, ups_AE: 0.01352,  val aux1 chunk accuracy 1.5363759602349751,  val aux2 chunk accuracy 57.163601161665056,  
+  --> Processing Train Batch: 0
+  --> Processing Train Batch: 20
+  --> Processing Train Batch: 40
+  --> Processing Train Batch: 60
+  --> Processing Train Batch: 80
+  --> Processing Train Batch: 100
+  --> Processing Train Batch: 120
+ Epoch [  6/100]-TRAIN:  aux1: 3.71204,  aux2: 0.58529,  aux_AE: 0.01323,  total: -0.01839,  ups_AE: 0.01310,  -VAL: aux1: 3.90374, aux2: 0.81516, aux_AE: 0.01351, total: -0.01772, ups_AE: 0.01344,  val aux1 chunk accuracy 1.6719385449615907,  val aux2 chunk accuracy 59.97095837366893,  
+  --> Processing Train Batch: 0
+  --> Processing Train Batch: 20
+  --> Processing Train Batch: 40
+  --> Processing Train Batch: 60
+  --> Processing Train Batch: 80
+  --> Processing Train Batch: 100
+  --> Processing Train Batch: 120
+ Epoch [  7/100]-TRAIN:  aux1: 3.71200,  aux2: 0.58084,  aux_AE: 0.01316,  total: -0.01848,  ups_AE: 0.01303,  -VAL: aux1: 3.90130, aux2: 0.79031, aux_AE: 0.01343, total: -0.01803, ups_AE: 0.01335,  val aux1 chunk accuracy 1.6267510167193855,  val aux2 chunk accuracy 59.53533397870281,  
+  --> Processing Train Batch: 0
+  --> Processing Train Batch: 20
+  --> Processing Train Batch: 40
+  --> Processing Train Batch: 60
+  --> Processing Train Batch: 80
+  --> Processing Train Batch: 100
+  --> Processing Train Batch: 120
+ Epoch [  8/100]-TRAIN:  aux1: 3.71119,  aux2: 0.57635,  aux_AE: 0.01310,  total: -0.01860,  ups_AE: 0.01296,  -VAL: aux1: 3.90130, aux2: 0.79417, aux_AE: 0.01337, total: -0.01804, ups_AE: 0.01329,  val aux1 chunk accuracy 1.49118843199277,  val aux2 chunk accuracy 56.24394966118103,  
+  --> Processing Train Batch: 0
+  --> Processing Train Batch: 20
+  --> Processing Train Batch: 40
+  --> Processing Train Batch: 60
+  --> Processing Train Batch: 80
+  --> Processing Train Batch: 100
+  --> Processing Train Batch: 120
+ Epoch [  9/100]-TRAIN:  aux1: 3.71144,  aux2: 0.57221,  aux_AE: 0.01304,  total: -0.01867,  ups_AE: 0.01290,  -VAL: aux1: 3.90025, aux2: 0.79902, aux_AE: 0.01331, total: -0.01804, ups_AE: 0.01323,  val aux1 chunk accuracy 1.3556258472661544,  val aux2 chunk accuracy 58.857696030977735,  
+  --> Processing Train Batch: 0
+  --> Processing Train Batch: 20
+  --> Processing Train Batch: 40
+  --> Processing Train Batch: 60
+  --> Processing Train Batch: 80
+  --> Processing Train Batch: 100
+  --> Processing Train Batch: 120
+ Epoch [ 10/100]-TRAIN:  aux1: 3.71093,  aux2: 0.56263,  aux_AE: 0.01298,  total: -0.01881,  ups_AE: 0.01284,  -VAL: aux1: 3.90097, aux2: 0.82520, aux_AE: 0.01327, total: -0.01784, ups_AE: 0.01319,  val aux1 chunk accuracy 1.3556258472661544,  val aux2 chunk accuracy 60.01936108422071,  
+  --> Processing Train Batch: 0
+  --> Processing Train Batch: 20
+  --> Processing Train Batch: 40
+  --> Processing Train Batch: 60
+  --> Processing Train Batch: 80
+  --> Processing Train Batch: 100
+  --> Processing Train Batch: 120
+ Epoch [ 11/100]-TRAIN:  aux1: 3.71136,  aux2: 0.56126,  aux_AE: 0.01293,  total: -0.01891,  ups_AE: 0.01279,  -VAL: aux1: 3.89966, aux2: 0.81421, aux_AE: 0.01320, total: -0.01800, ups_AE: 0.01312,  val aux1 chunk accuracy 1.2200632625395391,  val aux2 chunk accuracy 59.34172313649564,  
+  --> Processing Train Batch: 0
+  --> Processing Train Batch: 20
+  --> Processing Train Batch: 40
+  --> Processing Train Batch: 60
+  --> Processing Train Batch: 80
+  --> Processing Train Batch: 100
+  --> Processing Train Batch: 120
+ Epoch [ 12/100]-TRAIN:  aux1: 3.71204,  aux2: 0.55362,  aux_AE: 0.01288,  total: -0.01897,  ups_AE: 0.01275,  -VAL: aux1: 3.89907, aux2: 0.83507, aux_AE: 0.01314, total: -0.01784, ups_AE: 0.01306,  val aux1 chunk accuracy 1.2200632625395391,  val aux2 chunk accuracy 59.43852855759923,  
+  --> Processing Train Batch: 0
+  --> Processing Train Batch: 20
+  --> Processing Train Batch: 40
+  --> Processing Train Batch: 60
+  --> Processing Train Batch: 80
+  --> Processing Train Batch: 100
+  --> Processing Train Batch: 120
+ Epoch [ 13/100]-TRAIN:  aux1: 3.71196,  aux2: 0.54852,  aux_AE: 0.01283,  total: -0.01910,  ups_AE: 0.01269,  -VAL: aux1: 3.89749, aux2: 0.82427, aux_AE: 0.01309, total: -0.01798, ups_AE: 0.01301,  val aux1 chunk accuracy 1.174875734297334,  val aux2 chunk accuracy 57.550822846079384,  
+  --> Processing Train Batch: 0
+  --> Processing Train Batch: 20
+  --> Processing Train Batch: 40
+  --> Processing Train Batch: 60
+  --> Processing Train Batch: 80
+  --> Processing Train Batch: 100
+  --> Processing Train Batch: 120
+ Epoch [ 14/100]-TRAIN:  aux1: 3.71124,  aux2: 0.54129,  aux_AE: 0.01278,  total: -0.01919,  ups_AE: 0.01265,  -VAL: aux1: 3.89723, aux2: 0.82376, aux_AE: 0.01303, total: -0.01804, ups_AE: 0.01295,  val aux1 chunk accuracy 1.0393131495707186,  val aux2 chunk accuracy 58.27686350435625,  
+No improvement since last best model
+Learning rate decreased, new lr: (1.00e-02)
+  --> Processing Train Batch: 0
+  --> Processing Train Batch: 20
+  --> Processing Train Batch: 40
+  --> Processing Train Batch: 60
+  --> Processing Train Batch: 80
+  --> Processing Train Batch: 100
+  --> Processing Train Batch: 120
+ Epoch [ 15/100]-TRAIN:  aux1: 3.71005,  aux2: 0.56960,  aux_AE: 0.01300,  total: -0.01879,  ups_AE: 0.01286,  -VAL: aux1: 3.89892, aux2: 0.80095, aux_AE: 0.01326, total: -0.01807, ups_AE: 0.01318,  val aux1 chunk accuracy 1.3556258472661544,  val aux2 chunk accuracy 59.63213939980639,  
+  --> Processing Train Batch: 0
+  --> Processing Train Batch: 20
+  --> Processing Train Batch: 40
+  --> Processing Train Batch: 60
+  --> Processing Train Batch: 80
+  --> Processing Train Batch: 100
+  --> Processing Train Batch: 120
+ Epoch [ 16/100]-TRAIN:  aux1: 3.70945,  aux2: 0.56548,  aux_AE: 0.01297,  total: -0.01881,  ups_AE: 0.01283,  -VAL: aux1: 3.90023, aux2: 0.80550, aux_AE: 0.01325, total: -0.01804, ups_AE: 0.01317,  val aux1 chunk accuracy 1.3104383190239492,  val aux2 chunk accuracy 60.55179090029041,  
+  --> Processing Train Batch: 0
+  --> Processing Train Batch: 20
+  --> Processing Train Batch: 40
+  --> Processing Train Batch: 60
+  --> Processing Train Batch: 80
+  --> Processing Train Batch: 100
+  --> Processing Train Batch: 120
+ Epoch [ 17/100]-TRAIN:  aux1: 3.71039,  aux2: 0.56384,  aux_AE: 0.01294,  total: -0.01887,  ups_AE: 0.01281,  -VAL: aux1: 3.89932, aux2: 0.80304, aux_AE: 0.01320, total: -0.01810, ups_AE: 0.01313,  val aux1 chunk accuracy 1.3104383190239492,  val aux2 chunk accuracy 59.00290416263311,  
+  --> Processing Train Batch: 0
+  --> Processing Train Batch: 20
+  --> Processing Train Batch: 40
+  --> Processing Train Batch: 60
+  --> Processing Train Batch: 80
+  --> Processing Train Batch: 100
+  --> Processing Train Batch: 120
+ Epoch [ 18/100]-TRAIN:  aux1: 3.71030,  aux2: 0.56182,  aux_AE: 0.01292,  total: -0.01896,  ups_AE: 0.01278,  -VAL: aux1: 3.89855, aux2: 0.81553, aux_AE: 0.01317, total: -0.01800, ups_AE: 0.01309,  val aux1 chunk accuracy 1.3104383190239492,  val aux2 chunk accuracy 59.58373668925459,  
+  --> Processing Train Batch: 0
+  --> Processing Train Batch: 20
+  --> Processing Train Batch: 40
+  --> Processing Train Batch: 60
+  --> Processing Train Batch: 80
+  --> Processing Train Batch: 100
+  --> Processing Train Batch: 120
+ Epoch [ 19/100]-TRAIN:  aux1: 3.71087,  aux2: 0.55645,  aux_AE: 0.01289,  total: -0.01900,  ups_AE: 0.01276,  -VAL: aux1: 3.90056, aux2: 0.81344, aux_AE: 0.01317, total: -0.01803, ups_AE: 0.01310,  val aux1 chunk accuracy 1.2200632625395391,  val aux2 chunk accuracy 59.293320425943854,  
+  --> Processing Train Batch: 0
+  --> Processing Train Batch: 20
+  --> Processing Train Batch: 40
+  --> Processing Train Batch: 60
+  --> Processing Train Batch: 80
+  --> Processing Train Batch: 100
+  --> Processing Train Batch: 120
+ Epoch [ 20/100]-TRAIN:  aux1: 3.70983,  aux2: 0.55416,  aux_AE: 0.01287,  total: -0.01904,  ups_AE: 0.01273,  -VAL: aux1: 3.89932, aux2: 0.81487, aux_AE: 0.01312, total: -0.01806, ups_AE: 0.01304,  val aux1 chunk accuracy 1.174875734297334,  val aux2 chunk accuracy 59.68054211035818,  
+  --> Processing Train Batch: 0
+  --> Processing Train Batch: 20
+  --> Processing Train Batch: 40
+  --> Processing Train Batch: 60
+  --> Processing Train Batch: 80
+  --> Processing Train Batch: 100
+  --> Processing Train Batch: 120
+ Epoch [ 21/100]-TRAIN:  aux1: 3.71007,  aux2: 0.55391,  aux_AE: 0.01284,  total: -0.01909,  ups_AE: 0.01271,  -VAL: aux1: 3.89818, aux2: 0.80918, aux_AE: 0.01310, total: -0.01813, ups_AE: 0.01302,  val aux1 chunk accuracy 1.0845006778129238,  val aux2 chunk accuracy 57.84123910939013,  
+  --> Processing Train Batch: 0
+  --> Processing Train Batch: 20
+  --> Processing Train Batch: 40
+  --> Processing Train Batch: 60
+  --> Processing Train Batch: 80
+  --> Processing Train Batch: 100
+  --> Processing Train Batch: 120
+ Epoch [ 22/100]-TRAIN:  aux1: 3.71089,  aux2: 0.55094,  aux_AE: 0.01282,  total: -0.01914,  ups_AE: 0.01268,  -VAL: aux1: 3.89962, aux2: 0.81427, aux_AE: 0.01311, total: -0.01807, ups_AE: 0.01304,  val aux1 chunk accuracy 1.0393131495707186,  val aux2 chunk accuracy 58.27686350435625,  
+  --> Processing Train Batch: 0
+  --> Processing Train Batch: 20
+  --> Processing Train Batch: 40
+  --> Processing Train Batch: 60
+  --> Processing Train Batch: 80
+  --> Processing Train Batch: 100
+  --> Processing Train Batch: 120
+ Epoch [ 23/100]-TRAIN:  aux1: 3.70954,  aux2: 0.54715,  aux_AE: 0.01280,  total: -0.01919,  ups_AE: 0.01266,  -VAL: aux1: 3.89798, aux2: 0.81680, aux_AE: 0.01305, total: -0.01810, ups_AE: 0.01297,  val aux1 chunk accuracy 1.0393131495707186,  val aux2 chunk accuracy 57.889641819941914,  
+  --> Processing Train Batch: 0
+  --> Processing Train Batch: 20
+  --> Processing Train Batch: 40
+  --> Processing Train Batch: 60
+  --> Processing Train Batch: 80
+  --> Processing Train Batch: 100
+  --> Processing Train Batch: 120
+ Epoch [ 24/100]-TRAIN:  aux1: 3.71032,  aux2: 0.54536,  aux_AE: 0.01277,  total: -0.01921,  ups_AE: 0.01264,  -VAL: aux1: 3.90060, aux2: 0.82709, aux_AE: 0.01309, total: -0.01798, ups_AE: 0.01301,  val aux1 chunk accuracy 1.0393131495707186,  val aux2 chunk accuracy 59.48693126815101,  
+  --> Processing Train Batch: 0
+  --> Processing Train Batch: 20
+  --> Processing Train Batch: 40
+  --> Processing Train Batch: 60
+  --> Processing Train Batch: 80
+  --> Processing Train Batch: 100
+  --> Processing Train Batch: 120
+ Epoch [ 25/100]-TRAIN:  aux1: 3.71095,  aux2: 0.54016,  aux_AE: 0.01275,  total: -0.01929,  ups_AE: 0.01262,  -VAL: aux1: 3.89788, aux2: 0.83891, aux_AE: 0.01301, total: -0.01792, ups_AE: 0.01293,  val aux1 chunk accuracy 1.1296882060551288,  val aux2 chunk accuracy 59.92255566311714,  
+  --> Processing Train Batch: 0
+  --> Processing Train Batch: 20
+  --> Processing Train Batch: 40
+  --> Processing Train Batch: 60
+  --> Processing Train Batch: 80
+  --> Processing Train Batch: 100
+  --> Processing Train Batch: 120
+ Epoch [ 26/100]-TRAIN:  aux1: 3.71176,  aux2: 0.53979,  aux_AE: 0.01273,  total: -0.01934,  ups_AE: 0.01259,  -VAL: aux1: 3.89812, aux2: 0.85417, aux_AE: 0.01299, total: -0.01779, ups_AE: 0.01291,  val aux1 chunk accuracy 1.0845006778129238,  val aux2 chunk accuracy 60.26137463697967,  
+No improvement since last best model
+Learning rate decreased, new lr: (5.00e-03)
+  --> Processing Train Batch: 0
+  --> Processing Train Batch: 20
+  --> Processing Train Batch: 40
+  --> Processing Train Batch: 60
+  --> Processing Train Batch: 80
+  --> Processing Train Batch: 100
+  --> Processing Train Batch: 120
+ Epoch [ 27/100]-TRAIN:  aux1: 3.71071,  aux2: 0.55173,  aux_AE: 0.01282,  total: -0.01914,  ups_AE: 0.01268,  -VAL: aux1: 3.89857, aux2: 0.81346, aux_AE: 0.01308, total: -0.01811, ups_AE: 0.01300,  val aux1 chunk accuracy 1.0845006778129238,  val aux2 chunk accuracy 58.61568247821878,  
+  --> Processing Train Batch: 0
+  --> Processing Train Batch: 20
+  --> Processing Train Batch: 40
+  --> Processing Train Batch: 60
+  --> Processing Train Batch: 80
+  --> Processing Train Batch: 100
+  --> Processing Train Batch: 120
+ Epoch [ 28/100]-TRAIN:  aux1: 3.71144,  aux2: 0.55085,  aux_AE: 0.01281,  total: -0.01915,  ups_AE: 0.01267,  -VAL: aux1: 3.89923, aux2: 0.81919, aux_AE: 0.01307, total: -0.01806, ups_AE: 0.01300,  val aux1 chunk accuracy 1.1296882060551288,  val aux2 chunk accuracy 59.196515004840265,  
+  --> Processing Train Batch: 0
+  --> Processing Train Batch: 20
+  --> Processing Train Batch: 40
+  --> Processing Train Batch: 60
+  --> Processing Train Batch: 80
+  --> Processing Train Batch: 100
+  --> Processing Train Batch: 120
+ Epoch [ 29/100]-TRAIN:  aux1: 3.70909,  aux2: 0.54899,  aux_AE: 0.01280,  total: -0.01920,  ups_AE: 0.01266,  -VAL: aux1: 3.90028, aux2: 0.81937, aux_AE: 0.01309, total: -0.01805, ups_AE: 0.01302,  val aux1 chunk accuracy 1.0845006778129238,  val aux2 chunk accuracy 59.293320425943854,  
+  --> Processing Train Batch: 0
+  --> Processing Train Batch: 20
+  --> Processing Train Batch: 40
+  --> Processing Train Batch: 60
+  --> Processing Train Batch: 80
+  --> Processing Train Batch: 100
+  --> Processing Train Batch: 120
+ Epoch [ 30/100]-TRAIN:  aux1: 3.71113,  aux2: 0.54742,  aux_AE: 0.01279,  total: -0.01924,  ups_AE: 0.01265,  -VAL: aux1: 3.89876, aux2: 0.81600, aux_AE: 0.01306, total: -0.01810, ups_AE: 0.01299,  val aux1 chunk accuracy 1.0845006778129238,  val aux2 chunk accuracy 57.69603097773476,  
+  --> Processing Train Batch: 0
+  --> Processing Train Batch: 20
+  --> Processing Train Batch: 40
+  --> Processing Train Batch: 60
+  --> Processing Train Batch: 80
+  --> Processing Train Batch: 100
+  --> Processing Train Batch: 120
+ Epoch [ 31/100]-TRAIN:  aux1: 3.71225,  aux2: 0.54427,  aux_AE: 0.01278,  total: -0.01920,  ups_AE: 0.01264,  -VAL: aux1: 3.89901, aux2: 0.82653, aux_AE: 0.01305, total: -0.01801, ups_AE: 0.01297,  val aux1 chunk accuracy 1.1296882060551288,  val aux2 chunk accuracy 59.68054211035818,  
+No improvement since last best model
+Learning rate decreased, new lr: (2.50e-03)
+  --> Processing Train Batch: 0
+  --> Processing Train Batch: 20
+  --> Processing Train Batch: 40
+  --> Processing Train Batch: 60
+  --> Processing Train Batch: 80
+  --> Processing Train Batch: 100
+  --> Processing Train Batch: 120
+ Epoch [ 32/100]-TRAIN:  aux1: 3.71090,  aux2: 0.55351,  aux_AE: 0.01283,  total: -0.01915,  ups_AE: 0.01269,  -VAL: aux1: 3.89861, aux2: 0.81363, aux_AE: 0.01311, total: -0.01807, ups_AE: 0.01304,  val aux1 chunk accuracy 1.0393131495707186,  val aux2 chunk accuracy 58.76089060987415,  
+  --> Processing Train Batch: 0
+  --> Processing Train Batch: 20
+  --> Processing Train Batch: 40
+  --> Processing Train Batch: 60
+  --> Processing Train Batch: 80
+  --> Processing Train Batch: 100
+  --> Processing Train Batch: 120
+ Epoch [ 33/100]-TRAIN:  aux1: 3.71066,  aux2: 0.55571,  aux_AE: 0.01282,  total: -0.01915,  ups_AE: 0.01268,  -VAL: aux1: 3.89883, aux2: 0.81578, aux_AE: 0.01309, total: -0.01808, ups_AE: 0.01301,  val aux1 chunk accuracy 1.1296882060551288,  val aux2 chunk accuracy 58.76089060987415,  
+  --> Processing Train Batch: 0
+  --> Processing Train Batch: 20
+  --> Processing Train Batch: 40
+  --> Processing Train Batch: 60
+  --> Processing Train Batch: 80
+  --> Processing Train Batch: 100
+  --> Processing Train Batch: 120
+ Epoch [ 34/100]-TRAIN:  aux1: 3.71070,  aux2: 0.55249,  aux_AE: 0.01281,  total: -0.01918,  ups_AE: 0.01268,  -VAL: aux1: 3.89877, aux2: 0.81938, aux_AE: 0.01308, total: -0.01805, ups_AE: 0.01300,  val aux1 chunk accuracy 1.1296882060551288,  val aux2 chunk accuracy 58.71248789932236,  
+  --> Processing Train Batch: 0
+  --> Processing Train Batch: 20
+  --> Processing Train Batch: 40
+  --> Processing Train Batch: 60
+  --> Processing Train Batch: 80
+  --> Processing Train Batch: 100
+  --> Processing Train Batch: 120
+ Epoch [ 35/100]-TRAIN:  aux1: 3.71045,  aux2: 0.54976,  aux_AE: 0.01281,  total: -0.01919,  ups_AE: 0.01268,  -VAL: aux1: 3.89879, aux2: 0.81502, aux_AE: 0.01309, total: -0.01808, ups_AE: 0.01301,  val aux1 chunk accuracy 1.0845006778129238,  val aux2 chunk accuracy 58.80929332042595,  
+  --> Processing Train Batch: 0
+  --> Processing Train Batch: 20
+  --> Processing Train Batch: 40
+  --> Processing Train Batch: 60
+  --> Processing Train Batch: 80
+  --> Processing Train Batch: 100
+  --> Processing Train Batch: 120
+ Epoch [ 36/100]-TRAIN:  aux1: 3.71046,  aux2: 0.54679,  aux_AE: 0.01280,  total: -0.01918,  ups_AE: 0.01267,  -VAL: aux1: 3.89881, aux2: 0.82494, aux_AE: 0.01308, total: -0.01799, ups_AE: 0.01301,  val aux1 chunk accuracy 1.0393131495707186,  val aux2 chunk accuracy 59.48693126815101,  
+No improvement since last best model
+Learning rate decreased, new lr: (1.25e-03)
+Early STOP, after saving model for  11  times
+---Early STOP, after saving model for 11 times
+
+Final Model VAL: -->  aux1: 3.89818, aux2: 0.80918, aux_AE: 0.01310, total: -0.01813, ups_AE: 0.01302,  , val aux1 chunk accuracy 1.0845006778129238, val aux2 chunk accuracy 57.84123910939013, val_loss_Estop: -0.01813
+
+
+Final Model --> test ups_AE: 0.01242, total: -0.01981, aux_AE: 0.01267, aux1: 3.82389, aux2: 0.62625, val aux1 chunk accuracy 3.9019509754877437, val aux2 chunk accuracy 64.92427943331704, 
+
+
+---------test data---------- 
+
+	LOSS: aux1: 3.82389, aux2: 0.62625, aux_AE: 0.01267, total: -0.01981, ups_AE: 0.01242,   
+	chunk-level aux1 accuracy: 3.9019509754877437 
+	----- speaker level evaluation 
+	Acc: 8.88888888888889
+	Sen: 0.0
+	Spe: 0.0
+	[Spe & Sen & Spe: 8.889 & 0.000 & 0.000] 
+	AUC: None
+	Avg scores of patients (or labels==1) (▼): 0.019209 +- 0.000000
+	Avg scores of controls (or labels==0) (▲): 0.020130 +- 0.000000
+	chunk-level aux2 accuracy: 64.92427943331704 
+	----- speaker level evaluation 
+	Acc: 80.0
+	Sen: 100.0
+	Spe: 60.0
+	[Spe & Sen & Spe: 80.000 & 100.000 & 60.000] 
+	AUC: None
+	Avg scores of patients (or labels==1) (▼): 0.358431 +- 0.073614
+	Avg scores of controls (or labels==0) (▲): 0.512308 +- 0.063996
+
+
+Final Model --> val ups_AE: 0.01302, total: -0.01813, aux_AE: 0.01310, aux1: 3.89818, aux2: 0.80918, val aux1 chunk accuracy 1.0845006778129238, val aux2 chunk accuracy 57.84123910939013, 
+
+
+---------val data---------- 
+
+	LOSS: aux1: 3.89818, aux2: 0.80918, aux_AE: 0.01310, total: -0.01813, ups_AE: 0.01302,   
+	chunk-level aux1 accuracy: 1.0845006778129238 
+	----- speaker level evaluation 
+	Acc: 4.444444444444445
+	Sen: 0.0
+	Spe: 0.0
+	[Spe & Sen & Spe: 4.444 & 0.000 & 0.000] 
+	AUC: None
+	Avg scores of patients (or labels==1) (▼): 0.018698 +- 0.000000
+	Avg scores of controls (or labels==0) (▲): 0.020179 +- 0.000000
+	chunk-level aux2 accuracy: 57.84123910939013 
+	----- speaker level evaluation 
+	Acc: 70.0
+	Sen: 60.0
+	Spe: 80.0
+	[Spe & Sen & Spe: 70.000 & 60.000 & 80.000] 
+	AUC: None
+	Avg scores of patients (or labels==1) (▼): 0.480242 +- 0.176528
+	Avg scores of controls (or labels==0) (▲): 0.540662 +- 0.061097
+
+
+Final Model --> train ups_AE: 0.01267, total: -0.01923, aux_AE: 0.01274, aux1: 3.70473, aux2: 0.53972, val aux1 chunk accuracy 5.932822197882439, val aux2 chunk accuracy 72.88044772564896, 
+
+
+---------train data---------- 
+
+	LOSS: aux1: 3.70473, aux2: 0.53972, aux_AE: 0.01274, total: -0.01923, ups_AE: 0.01267,   
+	chunk-level aux1 accuracy: 5.932822197882439 
+	----- speaker level evaluation 
+	Acc: 8.88888888888889
+	Sen: 0.0
+	Spe: 0.0
+	[Spe & Sen & Spe: 8.889 & 0.000 & 0.000] 
+	AUC: None
+	Avg scores of patients (or labels==1) (▼): 0.019446 +- 0.000000
+	Avg scores of controls (or labels==0) (▲): 0.020175 +- 0.000000
+	chunk-level aux2 accuracy: 72.88044772564896 
+	----- speaker level evaluation 
+	Acc: 91.25
+	Sen: 92.5
+	Spe: 90.0
+	[Spe & Sen & Spe: 91.250 & 92.500 & 90.000] 
+	AUC: None
+	Avg scores of patients (or labels==1) (▼): 0.346495 +- 0.086156
+	Avg scores of controls (or labels==0) (▲): 0.592989 +- 0.073951
+
+
+Final Model --> test ups_AE: 0.01242, total: -0.01981, aux_AE: 0.01267, aux1: 3.82389, aux2: 0.62625, val aux1 chunk accuracy 3.9019509754877437, val aux2 chunk accuracy 64.92427943331704, 
+
+
+Final Model --> val ups_AE: 0.01302, total: -0.01813, aux_AE: 0.01310, aux1: 3.89818, aux2: 0.80918, val aux1 chunk accuracy 1.0845006778129238, val aux2 chunk accuracy 57.84123910939013, 
+
+
+Final Model --> train ups_AE: 0.01267, total: -0.01923, aux_AE: 0.01274, aux1: 3.70494, aux2: 0.53985, val aux1 chunk accuracy 5.932822197882439, val aux2 chunk accuracy 72.88044772564896, 
+
+===== exit 0 after 2318s
