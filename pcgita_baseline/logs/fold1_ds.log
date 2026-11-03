@@ -1,0 +1,174 @@
+
+===== 2026-10-12 08:03:41  /usr/bin/python3 train_downstream.py -c /content/fast_repo/my_experiments/configs/pcgita_baseline/upstream_config.yaml -dc /content/fast_repo/my_experiments/configs/pcgita_baseline/downstream_config.yaml -ac /content/fast_repo/my_experiments/configs/pcgita_baseline/audio_config.yaml -n pcgita_baseline -s 0 --fold 1 --mode train --valmonitor
+Using device: cuda:0
+Tesla T4
+
+1 upstream pre-trained models are found.
+
+
+10 data folds are found for upstream training.
+
+/content/fast_repo/downstream/ds_runner.py:87: UserWarning: mismatch between number of data folds for upstream training and number of pre-trained upstream models
+ If upstream models for some folds are not found, random initialization is used for upstream encoder
+  warnings.warn(
+
+
+train Data...
+
+train file reading fold 1 [offline]...
+[Dataset] - Sampling random segments with sample length: 118 frames
+[Dataset] - Number of individual utterance instances: 2251
+
+
+val Data...
+
+val file reading fold 1 [offline]...
+[Dataset] - Sampling random segments with sample length: 118 frames
+[Dataset] - Number of individual utterance instances: 277
+
+ Monitoring training based on validation set.
+
+
+test Data...
+
+test file reading fold 1 [offline]...
+[Dataset] - Sampling random segments with sample length: 118 frames
+[Dataset] - Number of individual utterance instances: 297
+
+[FeatureExtractionPretrained] - Initializing model...
+Encoder Network: AECNNNet - Number of parameters: 2230977
+
+
+[FeatureExtractionPretrained] - Loading upstream model weights from the init ckpt from:  results/pcgita_baseline/ups-pcgita_baseline/outputs/saved_model/UPs_NN_fold1.ckpt
+FeatureExtractionPretrained(
+  (model): AECNNNetEncoder(
+    (EncoderNet): AECNNNetEnc(
+      (nonlinearity): LeakyReLU(negative_slope=0.01)
+      (dropout): Dropout(p=0.0, inplace=False)
+      (maxpool): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+      (EncoderCNN): Sequential(
+        (0): Dropout(p=0.0, inplace=False)
+        (1): Conv2d(1, 16, kernel_size=(3, 3), stride=(1, 1))
+        (2): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+        (3): BatchNorm2d(16, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (4): LeakyReLU(negative_slope=0.01)
+        (5): Conv2d(16, 32, kernel_size=(3, 3), stride=(1, 1))
+        (6): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+        (7): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (8): LeakyReLU(negative_slope=0.01)
+        (9): Conv2d(32, 64, kernel_size=(3, 3), stride=(1, 1))
+        (10): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+        (11): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (12): LeakyReLU(negative_slope=0.01)
+        (13): Conv2d(64, 128, kernel_size=(3, 3), stride=(1, 1))
+        (14): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+        (15): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (16): LeakyReLU(negative_slope=0.01)
+      )
+      (EncoderMLP): Sequential(
+        (0): Linear(in_features=3840, out_features=256, bias=True)
+        (1): LeakyReLU(negative_slope=0.01)
+        (2): Linear(in_features=256, out_features=128, bias=True)
+      )
+    )
+    (DecoderNet): AECNNNetDec(
+      (nonlinearity): LeakyReLU(negative_slope=0.01)
+      (dropout): Dropout(p=0.0, inplace=False)
+      (maxpool): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+      (DecoderMLP): Sequential(
+        (0): Linear(in_features=128, out_features=256, bias=True)
+        (1): LeakyReLU(negative_slope=0.01)
+        (2): Linear(in_features=256, out_features=3840, bias=True)
+      )
+      (DecoderCNN): Sequential(
+        (0): Interpolate()
+        (1): ConvTranspose2d(128, 64, kernel_size=(3, 3), stride=(1, 1))
+        (2): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (3): LeakyReLU(negative_slope=0.01)
+        (4): Interpolate()
+        (5): ConvTranspose2d(64, 32, kernel_size=(3, 3), stride=(1, 1))
+        (6): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (7): LeakyReLU(negative_slope=0.01)
+        (8): Interpolate()
+        (9): ConvTranspose2d(32, 16, kernel_size=(3, 3), stride=(1, 1))
+        (10): BatchNorm2d(16, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (11): LeakyReLU(negative_slope=0.01)
+        (12): Interpolate()
+        (13): ConvTranspose2d(16, 1, kernel_size=(3, 3), stride=(1, 1))
+        (14): Sigmoid()
+      )
+    )
+  )
+)
+
+[downstream classifier] - Initializing model...
+DownStreamTrain: MLP - Number of parameters: 12546
+
+
+ - Loss Function:  CrossEntropyLoss() 
+
+
+Epoch [0/2]  train_loss: 0.69104   val_loss: 0.69523, val chunk acc: 49.806
+
+Epoch [1/2]  train_loss: 0.68375   val_loss: 0.68853, val chunk acc: 54.163
+
+Final Model -->  val loss: 0.68853 val chunk acc: 54.163 val loss Estop: 0.68853
+
+
+Evaluation Final Model --> test loss: 0.67870 test chunk acc: 56.571
+
+
+---------test data---------- 
+
+	loss: 0.6786959749810836
+	chunk-level accuracy: 56.570591108939915 
+	----- speaker level evaluation 
+	Acc: 80.0
+	Sen: 80.0
+	Spe: 80.0
+	[Spe & Sen & Spe: 80.000 & 80.000 & 80.000] 
+	AUC: 0.92
+	Avg scores of patients (▼): 0.491515 +- 0.008029
+	Avg scores of controls (▲): 0.510848 +- 0.012871
+
+
+Evaluation Final Model --> val loss: 0.68853 val chunk acc: 54.163
+
+
+---------val data---------- 
+
+	loss: 0.6885273097788246
+	chunk-level accuracy: 54.16263310745401 
+	----- speaker level evaluation 
+	Acc: 60.0
+	Sen: 20.0
+	Spe: 100.0
+	[Spe & Sen & Spe: 60.000 & 20.000 & 100.000] 
+	AUC: 0.64
+	Avg scores of patients (▼): 0.506260 +- 0.018381
+	Avg scores of controls (▲): 0.513981 +- 0.011483
+
+
+Evaluation Final Model --> train loss: 0.67506 train chunk acc: 59.115
+
+
+---------train data---------- 
+
+	loss: 0.6750602229071772
+	chunk-level accuracy: 59.11526553941414 
+	----- speaker level evaluation 
+	Acc: 80.0
+	Sen: 70.0
+	Spe: 90.0
+	[Spe & Sen & Spe: 80.000 & 70.000 & 90.000] 
+	AUC: 0.87
+	Avg scores of patients (▼): 0.494536 +- 0.013243
+	Avg scores of controls (▲): 0.517296 +- 0.014356
+
+
+Evaluation Final Model --> val loss: 0.68853 val chunk acc: 54.163
+
+
+Evaluation Final Model --> train loss: 0.67508 train chunk acc: 59.115
+
+===== exit 0 after 71s
