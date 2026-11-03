@@ -1,0 +1,20 @@
+SelectedAuxiliaryNetwork: MLP
+SelectedEncodedLayers: -1
+MLP:
+  outputdim: 45
+  hidden_units:
+  - 64
+  - 64
+  nonlinearity: leaky-relu
+  dropout_prob: 0.2
+dataloader:
+  online: false
+  num_workers: 0
+  batch_size: 128
+  sequence_length: 500
+  data_path: preprocess/pcgita_full_100spk/folds_spkID_task/
+  fs: 16000
+runner:
+  optimizer:
+    auxlr_ratio: 1
+    loss: CE

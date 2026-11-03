@@ -1,0 +1,368 @@
+
+===== 2026-10-15 12:07:38  /usr/bin/python3 train_downstream.py -c /content/repo/my_experiments/configs/adv_s0/upstream_config.yaml -dc /content/repo/my_experiments/configs/adv_s0/downstream_config.yaml -ac /content/repo/my_experiments/configs/adv_s0/audio_config.yaml -n adv_s0 -s 0 --fold 1 --mode train --valmonitor
+Using device: cuda:0
+Tesla T4
+
+1 upstream pre-trained models are found.
+
+
+10 data folds are found for upstream training.
+
+/content/repo/downstream/ds_runner.py:87: UserWarning: mismatch between number of data folds for upstream training and number of pre-trained upstream models
+ If upstream models for some folds are not found, random initialization is used for upstream encoder
+  warnings.warn(
+
+
+train Data...
+
+train file reading fold 1 [offline]...
+[Dataset] - Sampling random segments with sample length: 118 frames
+[Dataset] - Number of individual utterance instances: 2251
+
+
+val Data...
+
+val file reading fold 1 [offline]...
+[Dataset] - Sampling random segments with sample length: 118 frames
+[Dataset] - Number of individual utterance instances: 277
+
+ Monitoring training based on validation set.
+
+
+test Data...
+
+test file reading fold 1 [offline]...
+[Dataset] - Sampling random segments with sample length: 118 frames
+[Dataset] - Number of individual utterance instances: 297
+
+[FeatureExtractionPretrained] - Initializing model...
+Encoder Network: AECNNNet - Number of parameters: 2230977
+
+
+[FeatureExtractionPretrained] - Loading upstream model weights from the init ckpt from:  results/adv_s0/ups-adv_s0/outputs/saved_model/UPs_NN_fold1.ckpt
+FeatureExtractionPretrained(
+  (model): AECNNNetEncoder(
+    (EncoderNet): AECNNNetEnc(
+      (nonlinearity): LeakyReLU(negative_slope=0.01)
+      (dropout): Dropout(p=0.0, inplace=False)
+      (maxpool): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+      (EncoderCNN): Sequential(
+        (0): Dropout(p=0.0, inplace=False)
+        (1): Conv2d(1, 16, kernel_size=(3, 3), stride=(1, 1))
+        (2): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+        (3): BatchNorm2d(16, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (4): LeakyReLU(negative_slope=0.01)
+        (5): Conv2d(16, 32, kernel_size=(3, 3), stride=(1, 1))
+        (6): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+        (7): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (8): LeakyReLU(negative_slope=0.01)
+        (9): Conv2d(32, 64, kernel_size=(3, 3), stride=(1, 1))
+        (10): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+        (11): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (12): LeakyReLU(negative_slope=0.01)
+        (13): Conv2d(64, 128, kernel_size=(3, 3), stride=(1, 1))
+        (14): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+        (15): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (16): LeakyReLU(negative_slope=0.01)
+      )
+      (EncoderMLP): Sequential(
+        (0): Linear(in_features=3840, out_features=256, bias=True)
+        (1): LeakyReLU(negative_slope=0.01)
+        (2): Linear(in_features=256, out_features=128, bias=True)
+      )
+    )
+    (DecoderNet): AECNNNetDec(
+      (nonlinearity): LeakyReLU(negative_slope=0.01)
+      (dropout): Dropout(p=0.0, inplace=False)
+      (maxpool): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+      (DecoderMLP): Sequential(
+        (0): Linear(in_features=128, out_features=256, bias=True)
+        (1): LeakyReLU(negative_slope=0.01)
+        (2): Linear(in_features=256, out_features=3840, bias=True)
+      )
+      (DecoderCNN): Sequential(
+        (0): Interpolate()
+        (1): ConvTranspose2d(128, 64, kernel_size=(3, 3), stride=(1, 1))
+        (2): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (3): LeakyReLU(negative_slope=0.01)
+        (4): Interpolate()
+        (5): ConvTranspose2d(64, 32, kernel_size=(3, 3), stride=(1, 1))
+        (6): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (7): LeakyReLU(negative_slope=0.01)
+        (8): Interpolate()
+        (9): ConvTranspose2d(32, 16, kernel_size=(3, 3), stride=(1, 1))
+        (10): BatchNorm2d(16, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (11): LeakyReLU(negative_slope=0.01)
+        (12): Interpolate()
+        (13): ConvTranspose2d(16, 1, kernel_size=(3, 3), stride=(1, 1))
+        (14): Sigmoid()
+      )
+    )
+  )
+)
+
+[downstream classifier] - Initializing model...
+DownStreamTrain: MLP - Number of parameters: 12546
+
+
+ - Loss Function:  CrossEntropyLoss() 
+
+
+Epoch [  0/100]  train_loss: 0.69302   val_loss: 0.69275, val chunk acc: 49.806
+
+Epoch [  1/100]  train_loss: 0.69239   val_loss: 0.69244, val chunk acc: 49.806
+
+Epoch [  2/100]  train_loss: 0.69226   val_loss: 0.69222, val chunk acc: 49.806
+
+Epoch [  3/100]  train_loss: 0.69191   val_loss: 0.69222, val chunk acc: 49.806
+
+Epoch [  4/100]  train_loss: 0.69192   val_loss: 0.69186, val chunk acc: 50.968
+
+Epoch [  5/100]  train_loss: 0.69144   val_loss: 0.69168, val chunk acc: 51.597
+
+Epoch [  6/100]  train_loss: 0.69134   val_loss: 0.69149, val chunk acc: 50.242
+
+Epoch [  7/100]  train_loss: 0.69117   val_loss: 0.69126, val chunk acc: 50.581
+
+Epoch [  8/100]  train_loss: 0.69063   val_loss: 0.69110, val chunk acc: 55.663
+
+Epoch [  9/100]  train_loss: 0.69042   val_loss: 0.69073, val chunk acc: 55.324
+
+Epoch [ 10/100]  train_loss: 0.69043   val_loss: 0.69049, val chunk acc: 54.259
+
+Epoch [ 11/100]  train_loss: 0.69009   val_loss: 0.69022, val chunk acc: 52.517
+
+Epoch [ 12/100]  train_loss: 0.68963   val_loss: 0.68980, val chunk acc: 53.388
+
+Epoch [ 13/100]  train_loss: 0.68907   val_loss: 0.68939, val chunk acc: 54.598
+
+Epoch [ 14/100]  train_loss: 0.68874   val_loss: 0.68915, val chunk acc: 56.002
+
+Epoch [ 15/100]  train_loss: 0.68852   val_loss: 0.68863, val chunk acc: 56.631
+
+Epoch [ 16/100]  train_loss: 0.68787   val_loss: 0.68819, val chunk acc: 56.825
+
+Epoch [ 17/100]  train_loss: 0.68844   val_loss: 0.68788, val chunk acc: 56.050
+
+Epoch [ 18/100]  train_loss: 0.68767   val_loss: 0.68752, val chunk acc: 56.680
+
+Epoch [ 19/100]  train_loss: 0.68741   val_loss: 0.68749, val chunk acc: 54.743
+
+Epoch [ 20/100]  train_loss: 0.68707   val_loss: 0.68686, val chunk acc: 56.147
+
+Epoch [ 21/100]  train_loss: 0.68647   val_loss: 0.68637, val chunk acc: 57.067
+
+Epoch [ 22/100]  train_loss: 0.68565   val_loss: 0.68598, val chunk acc: 56.680
+
+Epoch [ 23/100]  train_loss: 0.68512   val_loss: 0.68580, val chunk acc: 56.292
+
+Epoch [ 24/100]  train_loss: 0.68505   val_loss: 0.68554, val chunk acc: 55.615
+
+Epoch [ 25/100]  train_loss: 0.68452   val_loss: 0.68488, val chunk acc: 56.873
+
+Epoch [ 26/100]  train_loss: 0.68391   val_loss: 0.68428, val chunk acc: 57.454
+
+Epoch [ 27/100]  train_loss: 0.68308   val_loss: 0.68405, val chunk acc: 55.566
+
+Epoch [ 28/100]  train_loss: 0.68382   val_loss: 0.68379, val chunk acc: 55.227
+
+Epoch [ 29/100]  train_loss: 0.68274   val_loss: 0.68290, val chunk acc: 56.534
+
+Epoch [ 30/100]  train_loss: 0.68313   val_loss: 0.68479, val chunk acc: 53.001
+
+Epoch [ 31/100]  train_loss: 0.68202   val_loss: 0.68280, val chunk acc: 54.695
+
+Epoch [ 32/100]  train_loss: 0.68168   val_loss: 0.68254, val chunk acc: 54.743
+
+Epoch [ 33/100]  train_loss: 0.68123   val_loss: 0.68085, val chunk acc: 56.196
+
+Epoch [ 34/100]  train_loss: 0.68055   val_loss: 0.68000, val chunk acc: 57.454
+
+Epoch [ 35/100]  train_loss: 0.68056   val_loss: 0.67991, val chunk acc: 56.099
+
+Epoch [ 36/100]  train_loss: 0.68101   val_loss: 0.67943, val chunk acc: 56.438
+
+Epoch [ 37/100]  train_loss: 0.68028   val_loss: 0.67912, val chunk acc: 56.099
+
+Epoch [ 38/100]  train_loss: 0.67960   val_loss: 0.67800, val chunk acc: 57.648
+
+Epoch [ 39/100]  train_loss: 0.67822   val_loss: 0.67770, val chunk acc: 57.938
+
+Epoch [ 40/100]  train_loss: 0.67895   val_loss: 0.67810, val chunk acc: 55.663
+
+Epoch [ 41/100]  train_loss: 0.67741   val_loss: 0.67627, val chunk acc: 58.180
+
+Epoch [ 42/100]  train_loss: 0.67659   val_loss: 0.67554, val chunk acc: 58.325
+
+Epoch [ 43/100]  train_loss: 0.67863   val_loss: 0.67543, val chunk acc: 56.680
+
+Epoch [ 44/100]  train_loss: 0.67737   val_loss: 0.67564, val chunk acc: 55.905
+
+Epoch [ 45/100]  train_loss: 0.67621   val_loss: 0.67365, val chunk acc: 57.357
+
+Epoch [ 46/100]  train_loss: 0.67717   val_loss: 0.67286, val chunk acc: 57.986
+
+Epoch [ 47/100]  train_loss: 0.67732   val_loss: 0.67262, val chunk acc: 57.938
+
+Epoch [ 48/100]  train_loss: 0.67679   val_loss: 0.67239, val chunk acc: 57.260
+
+Epoch [ 49/100]  train_loss: 0.67570   val_loss: 0.67195, val chunk acc: 57.260
+
+Epoch [ 50/100]  train_loss: 0.67490   val_loss: 0.67138, val chunk acc: 58.955
+
+Epoch [ 51/100]  train_loss: 0.67416   val_loss: 0.67251, val chunk acc: 55.954
+
+Epoch [ 52/100]  train_loss: 0.67523   val_loss: 0.67417, val chunk acc: 55.324
+
+Epoch [ 53/100]  train_loss: 0.67504   val_loss: 0.67007, val chunk acc: 57.599
+
+Epoch [ 54/100]  train_loss: 0.67375   val_loss: 0.67241, val chunk acc: 55.712
+
+Epoch [ 55/100]  train_loss: 0.67330   val_loss: 0.67323, val chunk acc: 55.082
+
+Epoch [ 56/100]  train_loss: 0.67388   val_loss: 0.66965, val chunk acc: 56.583
+
+Epoch [ 57/100]  train_loss: 0.67423   val_loss: 0.66919, val chunk acc: 56.922
+
+Epoch [ 58/100]  train_loss: 0.67333   val_loss: 0.66713, val chunk acc: 58.955
+
+Epoch [ 59/100]  train_loss: 0.67385   val_loss: 0.67044, val chunk acc: 55.131
+
+Epoch [ 60/100]  train_loss: 0.67325   val_loss: 0.66645, val chunk acc: 58.083
+
+Epoch [ 61/100]  train_loss: 0.67369   val_loss: 0.66973, val chunk acc: 55.857
+
+Epoch [ 62/100]  train_loss: 0.67247   val_loss: 0.66730, val chunk acc: 57.212
+
+Epoch [ 63/100]  train_loss: 0.67304   val_loss: 0.67225, val chunk acc: 55.808
+
+Epoch [ 64/100]  train_loss: 0.67136   val_loss: 0.66595, val chunk acc: 59.197
+
+Epoch [ 65/100]  train_loss: 0.67206   val_loss: 0.67553, val chunk acc: 54.550
+
+Epoch [ 66/100]  train_loss: 0.67137   val_loss: 0.67440, val chunk acc: 54.937
+
+Epoch [ 67/100]  train_loss: 0.67061   val_loss: 0.66424, val chunk acc: 59.923
+
+Epoch [ 68/100]  train_loss: 0.67167   val_loss: 0.66972, val chunk acc: 56.147
+
+Epoch [ 69/100]  train_loss: 0.67280   val_loss: 0.66882, val chunk acc: 56.389
+
+Epoch [ 70/100]  train_loss: 0.67012   val_loss: 0.66319, val chunk acc: 59.535
+
+Epoch [ 71/100]  train_loss: 0.67034   val_loss: 0.67027, val chunk acc: 55.712
+
+Epoch [ 72/100]  train_loss: 0.67013   val_loss: 0.66623, val chunk acc: 57.357
+
+Epoch [ 73/100]  train_loss: 0.67025   val_loss: 0.67904, val chunk acc: 54.985
+
+Epoch [ 74/100]  train_loss: 0.66913   val_loss: 0.66793, val chunk acc: 56.438
+
+Epoch [ 75/100]  train_loss: 0.66771   val_loss: 0.66701, val chunk acc: 56.583
+No improvement since last best model
+Learning rate decreased, new lr: (1.00e-02)
+
+Epoch [ 76/100]  train_loss: 0.66872   val_loss: 0.66762, val chunk acc: 56.147
+
+Epoch [ 77/100]  train_loss: 0.66945   val_loss: 0.66313, val chunk acc: 58.228
+
+Epoch [ 78/100]  train_loss: 0.67035   val_loss: 0.66259, val chunk acc: 58.761
+
+Epoch [ 79/100]  train_loss: 0.66955   val_loss: 0.67055, val chunk acc: 55.857
+
+Epoch [ 80/100]  train_loss: 0.67148   val_loss: 0.66466, val chunk acc: 57.502
+
+Epoch [ 81/100]  train_loss: 0.66787   val_loss: 0.67407, val chunk acc: 54.889
+
+Epoch [ 82/100]  train_loss: 0.66772   val_loss: 0.66488, val chunk acc: 56.922
+
+Epoch [ 83/100]  train_loss: 0.66865   val_loss: 0.66263, val chunk acc: 58.132
+No improvement since last best model
+Learning rate decreased, new lr: (5.00e-03)
+
+Epoch [ 84/100]  train_loss: 0.66791   val_loss: 0.66472, val chunk acc: 57.115
+
+Epoch [ 85/100]  train_loss: 0.66810   val_loss: 0.66632, val chunk acc: 56.631
+
+Epoch [ 86/100]  train_loss: 0.66947   val_loss: 0.66524, val chunk acc: 56.922
+
+Epoch [ 87/100]  train_loss: 0.66827   val_loss: 0.66368, val chunk acc: 57.551
+
+Epoch [ 88/100]  train_loss: 0.66797   val_loss: 0.66490, val chunk acc: 56.922
+No improvement since last best model
+Learning rate decreased, new lr: (2.50e-03)
+
+Epoch [ 89/100]  train_loss: 0.66805   val_loss: 0.66383, val chunk acc: 57.502
+
+Epoch [ 90/100]  train_loss: 0.66888   val_loss: 0.66342, val chunk acc: 58.083
+
+Epoch [ 91/100]  train_loss: 0.66901   val_loss: 0.66596, val chunk acc: 56.728
+
+Epoch [ 92/100]  train_loss: 0.66765   val_loss: 0.66402, val chunk acc: 57.406
+
+Epoch [ 93/100]  train_loss: 0.66746   val_loss: 0.66641, val chunk acc: 56.825
+No improvement since last best model
+Learning rate decreased, new lr: (1.25e-03)
+Early STOP, after saving model for  57  times
+---Early STOP, after saving model for 57 times
+
+Final Model -->  val loss: 0.66259 val chunk acc: 58.761 val loss Estop: 0.66259
+
+
+Evaluation Final Model --> test loss: 0.66575 test chunk acc: 55.545
+
+
+---------test data---------- 
+
+	loss: 0.6657511035601298
+	chunk-level accuracy: 55.54469956033219 
+	----- speaker level evaluation 
+	Acc: 70.0
+	Sen: 100.0
+	Spe: 40.0
+	[Spe & Sen & Spe: 70.000 & 100.000 & 40.000] 
+	AUC: 0.88
+	Avg scores of patients (▼): 0.450005 +- 0.018594
+	Avg scores of controls (▲): 0.489568 +- 0.026166
+
+
+Evaluation Final Model --> val loss: 0.66259 val chunk acc: 58.761
+
+
+---------val data---------- 
+
+	loss: 0.6625888012349606
+	chunk-level accuracy: 58.76089060987415 
+	----- speaker level evaluation 
+	Acc: 90.0
+	Sen: 80.0
+	Spe: 100.0
+	[Spe & Sen & Spe: 90.000 & 80.000 & 100.000] 
+	AUC: 0.84
+	Avg scores of patients (▼): 0.466964 +- 0.030020
+	Avg scores of controls (▲): 0.509471 +- 0.009491
+
+
+Evaluation Final Model --> train loss: 0.66394 train chunk acc: 59.324
+
+
+---------train data---------- 
+
+	loss: 0.6639440623858502
+	chunk-level accuracy: 59.32364848773517 
+	----- speaker level evaluation 
+	Acc: 75.0
+	Sen: 97.5
+	Spe: 52.5
+	[Spe & Sen & Spe: 75.000 & 97.500 & 52.500] 
+	AUC: 0.882
+	Avg scores of patients (▼): 0.452514 +- 0.027999
+	Avg scores of controls (▲): 0.498705 +- 0.024844
+
+
+Evaluation Final Model --> val loss: 0.66259 val chunk acc: 58.761
+
+
+Evaluation Final Model --> train loss: 0.66397 train chunk acc: 59.312
+
+===== exit 0 after 1091s

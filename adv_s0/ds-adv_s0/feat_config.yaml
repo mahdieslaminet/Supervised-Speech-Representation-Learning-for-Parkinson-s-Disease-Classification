@@ -1,0 +1,11 @@
+feat_type: fbank
+torchaudio:
+  frame_length: 32
+  frame_shift: 4
+  preemphasis_coefficient: 0.97
+  window_type: hamming
+  num_mel_bins: 126
+  channel: 0
+postprocess:
+  delta: 0
+  cmvn: false
