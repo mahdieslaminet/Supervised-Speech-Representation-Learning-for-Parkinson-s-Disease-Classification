@@ -1,0 +1,278 @@
+=================================================================
+       شناسنامه و ساختار فایل چک‌پوینت مدل (PyTorch Checkpoint)
+=================================================================
+مسیر فایل اصلی : /content/drive/MyDrive/idiap_pd/results/smoke_fusion/ds-smoke_fusion/outputs/saved_model/Ds_NN_fold1.ckpt
+کلیدهای اصلی ذخیره‌شده در چک‌پوینت: ['Optimizer', 'UpsConfig', 'DsConfig', 'ClassifierNet', 'DSNetworkType', 'DSNetConfig', 'EncoderNet', 'AENetworkType', 'UpsNetConfig']
+=================================================================
+
+-----------------------------------------------------------------
+بخش [Optimizer]:
+-----------------------------------------------------------------
+  [وضعیت بهینه‌ساز (Optimizer State)]:
+  گروه‌های پارامتری و نرخ یادگیری (param_groups):
+    {"lr": 0.02, "name": "Ds-model", "momentum": 0.0, "dampening": 0, "weight_decay": 0, "nesterov": false, "maximize": false, "foreach": null, "differentiable": false, "fused": null, "num_tensors_in_group": 6}
+
+-----------------------------------------------------------------
+بخش [UpsConfig]:
+-----------------------------------------------------------------
+  [تنظیمات و هایپرپارامترهای ذخیره‌شده (Config Dict)]:
+{
+  "SelectedAENetwork": "AECNNNet",
+  "AEMLPNet": {
+    "hidden_size": 100,
+    "hidden_units": [
+      128
+    ],
+    "nonlinearity": "relu",
+    "dropout_prob": 0.0
+  },
+  "AECNNNet": {
+    "hidden_size": 128,
+    "hidden_units": [
+      256
+    ],
+    "kernelsize": 3,
+    "poolingsize": 2,
+    "convchannels": [
+      16,
+      32,
+      64,
+      128
+    ],
+    "nonlinearity": "leaky-relu",
+    "dropout_prob": 0.0,
+    "batchnorm": true
+  },
+  "AERNNNet": {
+    "hidden_size": 128,
+    "hidden_units": [
+      256
+    ],
+    "RNN_dims": [
+      128
+    ],
+    "stacked_layers_nums": 1,
+    "bidirectional": true,
+    "nonlinearity": "leaky-relu",
+    "dropout_prob": 0.0
+  },
+  "dataloader": {
+    "online": false,
+    "num_workers": 0,
+    "batch_size": 10,
+    "sequence_length": 500,
+    "data_path": "preprocess/pcgita_full_100spk/folds/",
+    "fs": 16000
+  },
+  "runner": {
+    "Max_epoch": 2,
+    "optimizer": {
+      "type": "SGD",
+      "lr": "2e-2",
+      "minlr": "2e-3",
+      "loss": "MSE",
+      "momentum": 0.0
+    }
+  }
+}
+
+-----------------------------------------------------------------
+بخش [DsConfig]:
+-----------------------------------------------------------------
+  [تنظیمات و هایپرپارامترهای ذخیره‌شده (Config Dict)]:
+{
+  "Selecteddownstream": "MLP",
+  "SelectedEncodedLayers": -1,
+  "MLP": {
+    "outputdim": 2,
+    "hidden_units": [
+      64,
+      64
+    ],
+    "nonlinearity": "leaky-relu",
+    "dropout_prob": 0.2
+  },
+  "dataloader": {
+    "online": false,
+    "num_workers": 0,
+    "batch_size": 10,
+    "sequence_length": 500,
+    "data_path": "preprocess/pcgita_full_100spk/folds/",
+    "fs": 16000
+  },
+  "runner": {
+    "Max_epoch": 2,
+    "optimizer": {
+      "type": "SGD",
+      "lr": "2e-2",
+      "minlr": "2e-3",
+      "upslr_ratio": 0.1,
+      "momentum": 0.0,
+      "loss": "CE"
+    }
+  }
+}
+
+-----------------------------------------------------------------
+بخش [ClassifierNet]:
+-----------------------------------------------------------------
+  [لایه‌های شبکه عصبی و ابعاد تانسورهای وزن (State Dict)]:
+    - 1.weight                                   | Shape: [64, 128]          | Params:      8,192 | Dtype: torch.float32
+    - 1.bias                                     | Shape: [64]               | Params:         64 | Dtype: torch.float32
+    - 3.weight                                   | Shape: [64, 64]           | Params:      4,096 | Dtype: torch.float32
+    - 3.bias                                     | Shape: [64]               | Params:         64 | Dtype: torch.float32
+    - 5.weight                                   | Shape: [2, 64]            | Params:        128 | Dtype: torch.float32
+    - 5.bias                                     | Shape: [2]                | Params:          2 | Dtype: torch.float32
+
+  *** مجموع تعداد پارامترهای بخش [ClassifierNet]: 12,546 پارامتر ***
+
+-----------------------------------------------------------------
+بخش [DSNetworkType]:
+-----------------------------------------------------------------
+  مقدار: MLP
+
+-----------------------------------------------------------------
+بخش [DSNetConfig]:
+-----------------------------------------------------------------
+  [تنظیمات و هایپرپارامترهای ذخیره‌شده (Config Dict)]:
+{
+  "Selecteddownstream": "MLP",
+  "SelectedEncodedLayers": -1,
+  "MLP": {
+    "outputdim": 2,
+    "hidden_units": [
+      64,
+      64
+    ],
+    "nonlinearity": "leaky-relu",
+    "dropout_prob": 0.2
+  },
+  "dataloader": {
+    "online": false,
+    "num_workers": 0,
+    "batch_size": 10,
+    "sequence_length": 500,
+    "data_path": "preprocess/pcgita_full_100spk/folds/",
+    "fs": 16000
+  },
+  "runner": {
+    "Max_epoch": 2,
+    "optimizer": {
+      "type": "SGD",
+      "lr": "2e-2",
+      "minlr": "2e-3",
+      "upslr_ratio": 0.1,
+      "momentum": 0.0,
+      "loss": "CE"
+    }
+  }
+}
+
+-----------------------------------------------------------------
+بخش [EncoderNet]:
+-----------------------------------------------------------------
+  [لایه‌های شبکه عصبی و ابعاد تانسورهای وزن (State Dict)]:
+    - EncoderCNN.1.weight                        | Shape: [16, 1, 3, 3]      | Params:        144 | Dtype: torch.float32
+    - EncoderCNN.1.bias                          | Shape: [16]               | Params:         16 | Dtype: torch.float32
+    - EncoderCNN.3.weight                        | Shape: [16]               | Params:         16 | Dtype: torch.float32
+    - EncoderCNN.3.bias                          | Shape: [16]               | Params:         16 | Dtype: torch.float32
+    - EncoderCNN.3.running_mean                  | Shape: [16]               | Params:         16 | Dtype: torch.float32
+    - EncoderCNN.3.running_var                   | Shape: [16]               | Params:         16 | Dtype: torch.float32
+    - EncoderCNN.3.num_batches_tracked           | Shape: []                 | Params:          1 | Dtype: torch.int64
+    - EncoderCNN.5.weight                        | Shape: [32, 16, 3, 3]     | Params:      4,608 | Dtype: torch.float32
+    - EncoderCNN.5.bias                          | Shape: [32]               | Params:         32 | Dtype: torch.float32
+    - EncoderCNN.7.weight                        | Shape: [32]               | Params:         32 | Dtype: torch.float32
+    - EncoderCNN.7.bias                          | Shape: [32]               | Params:         32 | Dtype: torch.float32
+    - EncoderCNN.7.running_mean                  | Shape: [32]               | Params:         32 | Dtype: torch.float32
+    - EncoderCNN.7.running_var                   | Shape: [32]               | Params:         32 | Dtype: torch.float32
+    - EncoderCNN.7.num_batches_tracked           | Shape: []                 | Params:          1 | Dtype: torch.int64
+    - EncoderCNN.9.weight                        | Shape: [64, 32, 3, 3]     | Params:     18,432 | Dtype: torch.float32
+    - EncoderCNN.9.bias                          | Shape: [64]               | Params:         64 | Dtype: torch.float32
+    - EncoderCNN.11.weight                       | Shape: [64]               | Params:         64 | Dtype: torch.float32
+    - EncoderCNN.11.bias                         | Shape: [64]               | Params:         64 | Dtype: torch.float32
+    - EncoderCNN.11.running_mean                 | Shape: [64]               | Params:         64 | Dtype: torch.float32
+    - EncoderCNN.11.running_var                  | Shape: [64]               | Params:         64 | Dtype: torch.float32
+    - EncoderCNN.11.num_batches_tracked          | Shape: []                 | Params:          1 | Dtype: torch.int64
+    - EncoderCNN.13.weight                       | Shape: [128, 64, 3, 3]    | Params:     73,728 | Dtype: torch.float32
+    - EncoderCNN.13.bias                         | Shape: [128]              | Params:        128 | Dtype: torch.float32
+    - EncoderCNN.15.weight                       | Shape: [128]              | Params:        128 | Dtype: torch.float32
+    - EncoderCNN.15.bias                         | Shape: [128]              | Params:        128 | Dtype: torch.float32
+    - EncoderCNN.15.running_mean                 | Shape: [128]              | Params:        128 | Dtype: torch.float32
+    - EncoderCNN.15.running_var                  | Shape: [128]              | Params:        128 | Dtype: torch.float32
+    - EncoderCNN.15.num_batches_tracked          | Shape: []                 | Params:          1 | Dtype: torch.int64
+    - EncoderMLP.0.weight                        | Shape: [256, 3840]        | Params:    983,040 | Dtype: torch.float32
+    - EncoderMLP.0.bias                          | Shape: [256]              | Params:        256 | Dtype: torch.float32
+    - EncoderMLP.2.weight                        | Shape: [128, 256]         | Params:     32,768 | Dtype: torch.float32
+    - EncoderMLP.2.bias                          | Shape: [128]              | Params:        128 | Dtype: torch.float32
+
+  *** مجموع تعداد پارامترهای بخش [EncoderNet]: 1,114,308 پارامتر ***
+
+-----------------------------------------------------------------
+بخش [AENetworkType]:
+-----------------------------------------------------------------
+  مقدار: AECNNNet
+
+-----------------------------------------------------------------
+بخش [UpsNetConfig]:
+-----------------------------------------------------------------
+  [تنظیمات و هایپرپارامترهای ذخیره‌شده (Config Dict)]:
+{
+  "SelectedAENetwork": "AECNNNet",
+  "AEMLPNet": {
+    "hidden_size": 100,
+    "hidden_units": [
+      128
+    ],
+    "nonlinearity": "relu",
+    "dropout_prob": 0.0
+  },
+  "AECNNNet": {
+    "hidden_size": 128,
+    "hidden_units": [
+      256
+    ],
+    "kernelsize": 3,
+    "poolingsize": 2,
+    "convchannels": [
+      16,
+      32,
+      64,
+      128
+    ],
+    "nonlinearity": "leaky-relu",
+    "dropout_prob": 0.0,
+    "batchnorm": true
+  },
+  "AERNNNet": {
+    "hidden_size": 128,
+    "hidden_units": [
+      256
+    ],
+    "RNN_dims": [
+      128
+    ],
+    "stacked_layers_nums": 1,
+    "bidirectional": true,
+    "nonlinearity": "leaky-relu",
+    "dropout_prob": 0.0
+  },
+  "dataloader": {
+    "online": false,
+    "num_workers": 0,
+    "batch_size": 10,
+    "sequence_length": 500,
+    "data_path": "preprocess/pcgita_full_100spk/folds/",
+    "fs": 16000
+  },
+  "runner": {
+    "Max_epoch": 2,
+    "optimizer": {
+      "type": "SGD",
+      "lr": "2e-2",
+      "minlr": "2e-3",
+      "loss": "MSE",
+      "momentum": 0.0
+    }
+  }
+}
+
